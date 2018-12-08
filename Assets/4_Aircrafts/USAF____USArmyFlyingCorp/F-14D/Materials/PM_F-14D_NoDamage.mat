@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: PM_F-14D_NoDamage
+  m_Shader: {fileID: 4800000, guid: 0c2670efd3a03b44f809804ad18d3f10, type: 3}
+  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
+  m_LightmapFlags: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: a0528e6a4550827409ccf25b4c7c7157, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 421f6eddd429ed541a0030030850e586, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 921e22de57b39d44da2c14890b1c857d, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 2800000, guid: fd2a4bccfa34e644aadec3d090d4a677, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Normal
+        second:
+          m_Texture: {fileID: 2800000, guid: 421f6eddd429ed541a0030030850e586, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _CubeMap
+        second:
+          m_Texture: {fileID: 8900000, guid: da5ba1d99002e894c830472a13720128, type: 2}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 0
+      data:
+        first:
+          name: _Cutoff
+        second: 0.5
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _Glossiness
+        second: 0.78
+      data:
+        first:
+          name: _Metallic
+        second: 0.48
+      data:
+        first:
+          name: _BumpScale
+        second: 2
+      data:
+        first:
+          name: _Parallax
+        second: 0.02
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _PointLightIntensity
+        second: 1
+      data:
+        first:
+          name: _speed
+        second: 1
+      data:
+        first:
+          name: _frequency
+        second: 0
+      data:
+        first:
+          name: _Diffuse_multiply
+        second: 2.36
+      data:
+        first:
+          name: _intensity
+        second: 1
+      data:
+        first:
+          name: _CubeMap_Value
+        second: 0.5
+      data:
+        first:
+          name: _Normal_value
+        second: 1
+      data:
+        first:
+          name: _Gloss_Value
+        second: 1.36
+      data:
+        first:
+          name: _mucc
+        second: 2.66
+      data:
+        first:
+          name: _FBRANCHPHASE
+        second: 0.6
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 1.332, g: 1.332, b: 1.332, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 0.88235295, g: 0.8734936, b: 0.8239619, a: 1}
+      data:
+        first:
+          name: _SpecularColor
+        second: {r: 0.60294116, g: 0.49837428, b: 0.40343857, a: 1}

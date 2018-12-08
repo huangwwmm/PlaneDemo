@@ -1,0 +1,1424 @@
+fileFormatVersion: 2
+guid: ccc1fc9817552f04cbd68476504e1dfa
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: AileronL_DefaultName_NoDamage
+    100002: AileronR_DefaultName_NoDamage
+    100004: AttachedGroup_6*HVAR_2*M8_NoDamage
+    100006: AttachedGroup_6*HVAR_2*M8_NoDamage 1
+    100008: AttachedGroup_6*HVAR_2*M8_NoDamage 2
+    100010: AttachedGroup_6*HVAR_2*M8_NoDamage 3
+    100012: AttachedGroup_6*HVAR_2*M8_NoDamage 4
+    100014: AttachedGroup_6*HVAR_2*M8_NoDamage 5
+    100016: AttachedGroup_6*HVAR_2*M8_NoDamage 6
+    100018: AttachedGroup_6*HVAR_2*M8_NoDamage 7
+    100020: B_BackCanopy
+    100022: B_FrontCanopy
+    100024: B_WingL
+    100026: B_WingR
+    100028: BackCanopy_DefaultName_NoDamage
+    100030: CarriageBack_DefaultName_NoDamage
+    100032: CarriageBack_DefaultName_NoDamage 1
+    100034: CarriageBack_DefaultName_NoDamage 2
+    100036: CarriageBack_DefaultName_NoDamage 3
+    100038: CarriageL_DefaultName_NoDamage
+    100040: CarriageL_DefaultName_NoDamage 1
+    100042: CarriageL_DefaultName_NoDamage 2
+    100044: CarriageLAnimation_DefaultName_NoDamage
+    100046: CarriageLAnimation_DefaultName_NoDamage 1
+    100048: CarriageLAnimation_DefaultName_NoDamage 10
+    100050: CarriageLAnimation_DefaultName_NoDamage 11
+    100052: CarriageLAnimation_DefaultName_NoDamage 12
+    100054: CarriageLAnimation_DefaultName_NoDamage 2
+    100056: CarriageLAnimation_DefaultName_NoDamage 3
+    100058: CarriageLAnimation_DefaultName_NoDamage 4
+    100060: CarriageLAnimation_DefaultName_NoDamage 5
+    100062: CarriageLAnimation_DefaultName_NoDamage 6
+    100064: CarriageLAnimation_DefaultName_NoDamage 7
+    100066: CarriageLAnimation_DefaultName_NoDamage 8
+    100068: CarriageLAnimation_DefaultName_NoDamage 9
+    100070: CarriageR_DefaultName_NoDamage
+    100072: CarriageR_DefaultName_NoDamage 1
+    100074: CarriageR_DefaultName_NoDamage 2
+    100076: CarriageRAnimation_DefaultName_NoDamage
+    100078: CarriageRAnimation_DefaultName_NoDamage 1
+    100080: CarriageRAnimation_DefaultName_NoDamage 10
+    100082: CarriageRAnimation_DefaultName_NoDamage 11
+    100084: CarriageRAnimation_DefaultName_NoDamage 12
+    100086: CarriageRAnimation_DefaultName_NoDamage 13
+    100088: CarriageRAnimation_DefaultName_NoDamage 14
+    100090: CarriageRAnimation_DefaultName_NoDamage 15
+    100092: CarriageRAnimation_DefaultName_NoDamage 16
+    100094: CarriageRAnimation_DefaultName_NoDamage 17
+    100096: CarriageRAnimation_DefaultName_NoDamage 18
+    100098: CarriageRAnimation_DefaultName_NoDamage 19
+    100100: CarriageRAnimation_DefaultName_NoDamage 2
+    100102: CarriageRAnimation_DefaultName_NoDamage 20
+    100104: CarriageRAnimation_DefaultName_NoDamage 21
+    100106: CarriageRAnimation_DefaultName_NoDamage 22
+    100108: CarriageRAnimation_DefaultName_NoDamage 23
+    100110: CarriageRAnimation_DefaultName_NoDamage 24
+    100112: CarriageRAnimation_DefaultName_NoDamage 25
+    100114: CarriageRAnimation_DefaultName_NoDamage 26
+    100116: CarriageRAnimation_DefaultName_NoDamage 27
+    100118: CarriageRAnimation_DefaultName_NoDamage 28
+    100120: CarriageRAnimation_DefaultName_NoDamage 3
+    100122: CarriageRAnimation_DefaultName_NoDamage 4
+    100124: CarriageRAnimation_DefaultName_NoDamage 5
+    100126: CarriageRAnimation_DefaultName_NoDamage 6
+    100128: CarriageRAnimation_DefaultName_NoDamage 7
+    100130: CarriageRAnimation_DefaultName_NoDamage 8
+    100132: CarriageRAnimation_DefaultName_NoDamage 9
+    100134: CockpitCover_DefaultName_NoDamage
+    100136: CockpitCover_DefaultName_NoDamage 1
+    100138: DrawCall_0302
+    100140: ElevatorL_DefaultName_NoDamage
+    100142: ElevatorR_DefaultName_NoDamage
+    100144: EngineCoverBone_DefaultName_NoDamage
+    100146: EngineCoverBone_DefaultName_NoDamage 1
+    100148: //RootNode
+    100150: ForwardSlatL_DefaultName_NoDamage
+    100152: ForwardSlatR_DefaultName_NoDamage
+    100154: FrontCanopy_DefaultName_NoDamage
+    100156: Rudder_DefaultName_NoDamage
+    100158: Rudder_DefaultName_NoDamage 1
+    100160: S_AlignPlane_0
+    100162: S_EngineTurboEmitter_0
+    100164: S_EngineTurboEmitter_0 1
+    100166: S_Hitbox_Engine_0
+    100168: S_Hitbox_Engine_1
+    100170: S_Hitbox_Pilot_0
+    100172: S_Rocket_0_6*HVAR_2*M8
+    100174: S_Rocket_0_6*HVAR_2*M8 1
+    100176: S_Rocket_0_6*HVAR_2*M8 2
+    100178: S_Rocket_0_6*HVAR_2*M8 3
+    100180: S_Rocket_0_6*HVAR_2*M8 4
+    100182: S_Rocket_0_6*HVAR_2*M8 5
+    100184: S_Rocket_1_6*HVAR_2*M8
+    100186: S_Rocket_1_6*HVAR_2*M8 1
+    100188: S_TurbulanceEmitter_0
+    100190: S_TurbulanceEmitter_0 1
+    100192: S_WingAirFlow_0
+    100194: S_WingAirFlow_0 1
+    100196: UnkownType_DefaultName_NoDamage
+    100198: UnkownType_DefaultName_NoDamage 1
+    100200: UnkownType_DefaultName_NoDamage 2
+    100202: UnkownType_DefaultName_NoDamage 3
+    100204: UnkownType_DefaultName_NoDamage 4
+    100206: WingL_DefaultName_NoDamage
+    100208: WingR_DefaultName_NoDamage
+    100210: CarriageBackAnimation_DefaultName_NoDamage
+    100212: CarriageBackAnimation_DefaultName_NoDamage 1
+    100214: CarriageBackAnimation_DefaultName_NoDamage 2
+    100216: CarriageBackAnimation_DefaultName_NoDamage 3
+    100218: CarriageBackAnimation_DefaultName_NoDamage 4
+    100220: CarriageBackAnimation_DefaultName_NoDamage 5
+    100222: EngineCoverBone_DefaultName_NoDamage 10
+    100224: EngineCoverBone_DefaultName_NoDamage 11
+    100226: EngineCoverBone_DefaultName_NoDamage 12
+    100228: EngineCoverBone_DefaultName_NoDamage 13
+    100230: EngineCoverBone_DefaultName_NoDamage 14
+    100232: EngineCoverBone_DefaultName_NoDamage 15
+    100234: EngineCoverBone_DefaultName_NoDamage 16
+    100236: EngineCoverBone_DefaultName_NoDamage 17
+    100238: EngineCoverBone_DefaultName_NoDamage 18
+    100240: EngineCoverBone_DefaultName_NoDamage 19
+    100242: EngineCoverBone_DefaultName_NoDamage 2
+    100244: EngineCoverBone_DefaultName_NoDamage 20
+    100246: EngineCoverBone_DefaultName_NoDamage 21
+    100248: EngineCoverBone_DefaultName_NoDamage 3
+    100250: EngineCoverBone_DefaultName_NoDamage 4
+    100252: EngineCoverBone_DefaultName_NoDamage 5
+    100254: EngineCoverBone_DefaultName_NoDamage 6
+    100256: EngineCoverBone_DefaultName_NoDamage 7
+    100258: EngineCoverBone_DefaultName_NoDamage 8
+    100260: EngineCoverBone_DefaultName_NoDamage 9
+    100262: S_Cannon_20mmEmitter_1*20mm
+    100264: WeaponGroup_1*20mm_NoDamage
+    100266: S_IR_decoy _0
+    100268: S_IR_decoy _0 1
+    100270: S_EngineFireEmitter_0
+    100272: S_EngineFireEmitter_0 1
+    100274: AttachedGroup_DefaultName_NoDamage
+    100276: AttachedGroup_DefaultName_NoDamage 1
+    100278: AttachedGroup_DefaultName_NoDamage 2
+    100280: Dummy001
+    100282: Elevator_DefaultName_NoDamage
+    100284: Elevator_DefaultName_NoDamage 1
+    100286: Engincowl_DefaultName_NoDamage
+    100288: Engincowl_DefaultName_NoDamage 1
+    100290: FlapL_DefaultName_NoDamage
+    100292: FlapL_DefaultName_NoDamage 1
+    100294: FlapR_DefaultName_NoDamage
+    100296: FlapR_DefaultName_NoDamage 1
+    100298: Object074
+    100300: Object094
+    100302: Object095
+    100304: S_EngineTurbo_Jet_0
+    100306: S_EngineTurbo_Jet_0 1
+    100308: S_Hitbox_Engine_0 1
+    100310: UnkownType_DefaultName_NoDamage 5
+    100312: S_LightDamageSmoke_0
+    100314: S_LightDamageSmoke_0 1
+    100316: S_LightDamageSmoke_1
+    100318: S_LightDamageSmoke_1 1
+    100320: S_LightDamageSmoke_2
+    100322: S_LightDamageSmoke_2 1
+    100324: S_LightDamageSmoke_3
+    100326: S_LightDamageSmoke_3 1
+    100328: UnkownType_DefaultName_NoDamage 6
+    100330: UnkownType_DefaultName_NoDamage 7
+    100332: UnkownType_DefaultName_NoDamage 8
+    100334: WingL_DefaultName_HeavyDamage
+    100336: WingL_DefaultName_HeavyDamage 1
+    100338: WingR_DefaultName_HeavyDamage
+    100340: WingR_DefaultName_HeavyDamage 1
+    100342: S_IR_decoy_0
+    100344: AirBrake_DefaultName_NoDamage
+    100346: AirBrake_DefaultName_NoDamage 1
+    100348: AttachedGroup_2*M8_NoDamage
+    100350: AttachedGroup_2*M8_NoDamage 1
+    100352: S_Cannon_20mmEmitter_0
+    100354: S_IR_decoy_1
+    100356: S_Rocket_2*M8
+    100358: S_Rocket_2*M8 1
+    100360: S_WingCondensation_0
+    100362: S_WingCondensation_1
+    100364: S_Cannon_20mmEmitter_2*7.62mm_2*20mm
+    100366: FlapL_DefaultName_NoDamage 2
+    100368: FlapR_DefaultName_NoDamage 2
+    100370: Spoiler_DefaultName_NoDamage
+    100372: Spoiler_DefaultName_NoDamage 1
+    100374: Spoiler_DefaultName_NoDamage 2
+    100376: Spoiler_DefaultName_NoDamage 3
+    100378: Spoiler_DefaultName_NoDamage 4
+    100380: Spoiler_DefaultName_NoDamage 5
+    100382: S_AirBrakeFlow_0
+    100384: S_AirBrakeFlow_1
+    100386: S_SlatFlow_0
+    100388: S_SlatFlow_1
+    100390: S_SpoilerFlow_0
+    100392: S_SpoilerFlow_1
+    100394: S_WingCondensation
+    100396: S_WingCondensation 1
+    100398: S_TurbulanceEmitter_1
+    400000: AileronL_DefaultName_NoDamage
+    400002: AileronR_DefaultName_NoDamage
+    400004: AttachedGroup_6*HVAR_2*M8_NoDamage
+    400006: AttachedGroup_6*HVAR_2*M8_NoDamage 1
+    400008: AttachedGroup_6*HVAR_2*M8_NoDamage 2
+    400010: AttachedGroup_6*HVAR_2*M8_NoDamage 3
+    400012: AttachedGroup_6*HVAR_2*M8_NoDamage 4
+    400014: AttachedGroup_6*HVAR_2*M8_NoDamage 5
+    400016: AttachedGroup_6*HVAR_2*M8_NoDamage 6
+    400018: AttachedGroup_6*HVAR_2*M8_NoDamage 7
+    400020: B_BackCanopy
+    400022: B_FrontCanopy
+    400024: B_WingL
+    400026: B_WingR
+    400028: BackCanopy_DefaultName_NoDamage
+    400030: CarriageBack_DefaultName_NoDamage
+    400032: CarriageBack_DefaultName_NoDamage 1
+    400034: CarriageBack_DefaultName_NoDamage 2
+    400036: CarriageBack_DefaultName_NoDamage 3
+    400038: CarriageL_DefaultName_NoDamage
+    400040: CarriageL_DefaultName_NoDamage 1
+    400042: CarriageL_DefaultName_NoDamage 2
+    400044: CarriageLAnimation_DefaultName_NoDamage
+    400046: CarriageLAnimation_DefaultName_NoDamage 1
+    400048: CarriageLAnimation_DefaultName_NoDamage 10
+    400050: CarriageLAnimation_DefaultName_NoDamage 11
+    400052: CarriageLAnimation_DefaultName_NoDamage 12
+    400054: CarriageLAnimation_DefaultName_NoDamage 2
+    400056: CarriageLAnimation_DefaultName_NoDamage 3
+    400058: CarriageLAnimation_DefaultName_NoDamage 4
+    400060: CarriageLAnimation_DefaultName_NoDamage 5
+    400062: CarriageLAnimation_DefaultName_NoDamage 6
+    400064: CarriageLAnimation_DefaultName_NoDamage 7
+    400066: CarriageLAnimation_DefaultName_NoDamage 8
+    400068: CarriageLAnimation_DefaultName_NoDamage 9
+    400070: CarriageR_DefaultName_NoDamage
+    400072: CarriageR_DefaultName_NoDamage 1
+    400074: CarriageR_DefaultName_NoDamage 2
+    400076: CarriageRAnimation_DefaultName_NoDamage
+    400078: CarriageRAnimation_DefaultName_NoDamage 1
+    400080: CarriageRAnimation_DefaultName_NoDamage 10
+    400082: CarriageRAnimation_DefaultName_NoDamage 11
+    400084: CarriageRAnimation_DefaultName_NoDamage 12
+    400086: CarriageRAnimation_DefaultName_NoDamage 13
+    400088: CarriageRAnimation_DefaultName_NoDamage 14
+    400090: CarriageRAnimation_DefaultName_NoDamage 15
+    400092: CarriageRAnimation_DefaultName_NoDamage 16
+    400094: CarriageRAnimation_DefaultName_NoDamage 17
+    400096: CarriageRAnimation_DefaultName_NoDamage 18
+    400098: CarriageRAnimation_DefaultName_NoDamage 19
+    400100: CarriageRAnimation_DefaultName_NoDamage 2
+    400102: CarriageRAnimation_DefaultName_NoDamage 20
+    400104: CarriageRAnimation_DefaultName_NoDamage 21
+    400106: CarriageRAnimation_DefaultName_NoDamage 22
+    400108: CarriageRAnimation_DefaultName_NoDamage 23
+    400110: CarriageRAnimation_DefaultName_NoDamage 24
+    400112: CarriageRAnimation_DefaultName_NoDamage 25
+    400114: CarriageRAnimation_DefaultName_NoDamage 26
+    400116: CarriageRAnimation_DefaultName_NoDamage 27
+    400118: CarriageRAnimation_DefaultName_NoDamage 28
+    400120: CarriageRAnimation_DefaultName_NoDamage 3
+    400122: CarriageRAnimation_DefaultName_NoDamage 4
+    400124: CarriageRAnimation_DefaultName_NoDamage 5
+    400126: CarriageRAnimation_DefaultName_NoDamage 6
+    400128: CarriageRAnimation_DefaultName_NoDamage 7
+    400130: CarriageRAnimation_DefaultName_NoDamage 8
+    400132: CarriageRAnimation_DefaultName_NoDamage 9
+    400134: CockpitCover_DefaultName_NoDamage
+    400136: CockpitCover_DefaultName_NoDamage 1
+    400138: DrawCall_0302
+    400140: ElevatorL_DefaultName_NoDamage
+    400142: ElevatorR_DefaultName_NoDamage
+    400144: EngineCoverBone_DefaultName_NoDamage
+    400146: EngineCoverBone_DefaultName_NoDamage 1
+    400148: //RootNode
+    400150: ForwardSlatL_DefaultName_NoDamage
+    400152: ForwardSlatR_DefaultName_NoDamage
+    400154: FrontCanopy_DefaultName_NoDamage
+    400156: Rudder_DefaultName_NoDamage
+    400158: Rudder_DefaultName_NoDamage 1
+    400160: S_AlignPlane_0
+    400162: S_EngineTurboEmitter_0
+    400164: S_EngineTurboEmitter_0 1
+    400166: S_Hitbox_Engine_0
+    400168: S_Hitbox_Engine_1
+    400170: S_Hitbox_Pilot_0
+    400172: S_Rocket_0_6*HVAR_2*M8
+    400174: S_Rocket_0_6*HVAR_2*M8 1
+    400176: S_Rocket_0_6*HVAR_2*M8 2
+    400178: S_Rocket_0_6*HVAR_2*M8 3
+    400180: S_Rocket_0_6*HVAR_2*M8 4
+    400182: S_Rocket_0_6*HVAR_2*M8 5
+    400184: S_Rocket_1_6*HVAR_2*M8
+    400186: S_Rocket_1_6*HVAR_2*M8 1
+    400188: S_TurbulanceEmitter_0
+    400190: S_TurbulanceEmitter_0 1
+    400192: S_WingAirFlow_0
+    400194: S_WingAirFlow_0 1
+    400196: UnkownType_DefaultName_NoDamage
+    400198: UnkownType_DefaultName_NoDamage 1
+    400200: UnkownType_DefaultName_NoDamage 2
+    400202: UnkownType_DefaultName_NoDamage 3
+    400204: UnkownType_DefaultName_NoDamage 4
+    400206: WingL_DefaultName_NoDamage
+    400208: WingR_DefaultName_NoDamage
+    400210: CarriageBackAnimation_DefaultName_NoDamage
+    400212: CarriageBackAnimation_DefaultName_NoDamage 1
+    400214: CarriageBackAnimation_DefaultName_NoDamage 2
+    400216: CarriageBackAnimation_DefaultName_NoDamage 3
+    400218: CarriageBackAnimation_DefaultName_NoDamage 4
+    400220: CarriageBackAnimation_DefaultName_NoDamage 5
+    400222: EngineCoverBone_DefaultName_NoDamage 10
+    400224: EngineCoverBone_DefaultName_NoDamage 11
+    400226: EngineCoverBone_DefaultName_NoDamage 12
+    400228: EngineCoverBone_DefaultName_NoDamage 13
+    400230: EngineCoverBone_DefaultName_NoDamage 14
+    400232: EngineCoverBone_DefaultName_NoDamage 15
+    400234: EngineCoverBone_DefaultName_NoDamage 16
+    400236: EngineCoverBone_DefaultName_NoDamage 17
+    400238: EngineCoverBone_DefaultName_NoDamage 18
+    400240: EngineCoverBone_DefaultName_NoDamage 19
+    400242: EngineCoverBone_DefaultName_NoDamage 2
+    400244: EngineCoverBone_DefaultName_NoDamage 20
+    400246: EngineCoverBone_DefaultName_NoDamage 21
+    400248: EngineCoverBone_DefaultName_NoDamage 3
+    400250: EngineCoverBone_DefaultName_NoDamage 4
+    400252: EngineCoverBone_DefaultName_NoDamage 5
+    400254: EngineCoverBone_DefaultName_NoDamage 6
+    400256: EngineCoverBone_DefaultName_NoDamage 7
+    400258: EngineCoverBone_DefaultName_NoDamage 8
+    400260: EngineCoverBone_DefaultName_NoDamage 9
+    400262: S_Cannon_20mmEmitter_1*20mm
+    400264: WeaponGroup_1*20mm_NoDamage
+    400266: S_IR_decoy _0
+    400268: S_IR_decoy _0 1
+    400270: S_EngineFireEmitter_0
+    400272: S_EngineFireEmitter_0 1
+    400274: AttachedGroup_DefaultName_NoDamage
+    400276: AttachedGroup_DefaultName_NoDamage 1
+    400278: AttachedGroup_DefaultName_NoDamage 2
+    400280: Dummy001
+    400282: Elevator_DefaultName_NoDamage
+    400284: Elevator_DefaultName_NoDamage 1
+    400286: Engincowl_DefaultName_NoDamage
+    400288: Engincowl_DefaultName_NoDamage 1
+    400290: FlapL_DefaultName_NoDamage
+    400292: FlapL_DefaultName_NoDamage 1
+    400294: FlapR_DefaultName_NoDamage
+    400296: FlapR_DefaultName_NoDamage 1
+    400298: Object074
+    400300: Object094
+    400302: Object095
+    400304: S_EngineTurbo_Jet_0
+    400306: S_EngineTurbo_Jet_0 1
+    400308: S_Hitbox_Engine_0 1
+    400310: UnkownType_DefaultName_NoDamage 5
+    400312: S_LightDamageSmoke_0
+    400314: S_LightDamageSmoke_0 1
+    400316: S_LightDamageSmoke_1
+    400318: S_LightDamageSmoke_1 1
+    400320: S_LightDamageSmoke_2
+    400322: S_LightDamageSmoke_2 1
+    400324: S_LightDamageSmoke_3
+    400326: S_LightDamageSmoke_3 1
+    400328: UnkownType_DefaultName_NoDamage 6
+    400330: UnkownType_DefaultName_NoDamage 7
+    400332: UnkownType_DefaultName_NoDamage 8
+    400334: WingL_DefaultName_HeavyDamage
+    400336: WingL_DefaultName_HeavyDamage 1
+    400338: WingR_DefaultName_HeavyDamage
+    400340: WingR_DefaultName_HeavyDamage 1
+    400342: S_IR_decoy_0
+    400344: AirBrake_DefaultName_NoDamage
+    400346: AirBrake_DefaultName_NoDamage 1
+    400348: AttachedGroup_2*M8_NoDamage
+    400350: AttachedGroup_2*M8_NoDamage 1
+    400352: S_Cannon_20mmEmitter_0
+    400354: S_IR_decoy_1
+    400356: S_Rocket_2*M8
+    400358: S_Rocket_2*M8 1
+    400360: S_WingCondensation_0
+    400362: S_WingCondensation_1
+    400364: S_Cannon_20mmEmitter_2*7.62mm_2*20mm
+    400366: FlapL_DefaultName_NoDamage 2
+    400368: FlapR_DefaultName_NoDamage 2
+    400370: Spoiler_DefaultName_NoDamage
+    400372: Spoiler_DefaultName_NoDamage 1
+    400374: Spoiler_DefaultName_NoDamage 2
+    400376: Spoiler_DefaultName_NoDamage 3
+    400378: Spoiler_DefaultName_NoDamage 4
+    400380: Spoiler_DefaultName_NoDamage 5
+    400382: S_AirBrakeFlow_0
+    400384: S_AirBrakeFlow_1
+    400386: S_SlatFlow_0
+    400388: S_SlatFlow_1
+    400390: S_SpoilerFlow_0
+    400392: S_SpoilerFlow_1
+    400394: S_WingCondensation
+    400396: S_WingCondensation 1
+    400398: S_TurbulanceEmitter_1
+    2300000: AileronL_DefaultName_NoDamage
+    2300002: AileronR_DefaultName_NoDamage
+    2300004: AttachedGroup_6*HVAR_2*M8_NoDamage
+    2300006: AttachedGroup_6*HVAR_2*M8_NoDamage 1
+    2300008: AttachedGroup_6*HVAR_2*M8_NoDamage 2
+    2300010: AttachedGroup_6*HVAR_2*M8_NoDamage 3
+    2300012: AttachedGroup_6*HVAR_2*M8_NoDamage 4
+    2300014: AttachedGroup_6*HVAR_2*M8_NoDamage 5
+    2300016: AttachedGroup_6*HVAR_2*M8_NoDamage 6
+    2300018: AttachedGroup_6*HVAR_2*M8_NoDamage 7
+    2300020: B_BackCanopy
+    2300022: B_FrontCanopy
+    2300024: B_WingL
+    2300026: B_WingR
+    2300028: BackCanopy_DefaultName_NoDamage
+    2300030: CarriageBack_DefaultName_NoDamage
+    2300032: CarriageBack_DefaultName_NoDamage 1
+    2300034: CarriageBack_DefaultName_NoDamage 2
+    2300036: CarriageBack_DefaultName_NoDamage 3
+    2300038: CarriageL_DefaultName_NoDamage
+    2300040: CarriageL_DefaultName_NoDamage 1
+    2300042: CarriageL_DefaultName_NoDamage 2
+    2300044: CarriageLAnimation_DefaultName_NoDamage
+    2300046: CarriageLAnimation_DefaultName_NoDamage 1
+    2300048: CarriageLAnimation_DefaultName_NoDamage 10
+    2300050: CarriageLAnimation_DefaultName_NoDamage 11
+    2300052: CarriageLAnimation_DefaultName_NoDamage 12
+    2300054: CarriageLAnimation_DefaultName_NoDamage 2
+    2300056: CarriageLAnimation_DefaultName_NoDamage 3
+    2300058: CarriageLAnimation_DefaultName_NoDamage 4
+    2300060: CarriageLAnimation_DefaultName_NoDamage 5
+    2300062: CarriageLAnimation_DefaultName_NoDamage 6
+    2300064: CarriageLAnimation_DefaultName_NoDamage 7
+    2300066: CarriageLAnimation_DefaultName_NoDamage 8
+    2300068: CarriageLAnimation_DefaultName_NoDamage 9
+    2300070: CarriageR_DefaultName_NoDamage
+    2300072: CarriageR_DefaultName_NoDamage 1
+    2300074: CarriageR_DefaultName_NoDamage 2
+    2300076: CarriageRAnimation_DefaultName_NoDamage
+    2300078: CarriageRAnimation_DefaultName_NoDamage 1
+    2300080: CarriageRAnimation_DefaultName_NoDamage 10
+    2300082: CarriageRAnimation_DefaultName_NoDamage 11
+    2300084: CarriageRAnimation_DefaultName_NoDamage 12
+    2300086: CarriageRAnimation_DefaultName_NoDamage 13
+    2300088: CarriageRAnimation_DefaultName_NoDamage 14
+    2300090: CarriageRAnimation_DefaultName_NoDamage 15
+    2300092: CarriageRAnimation_DefaultName_NoDamage 16
+    2300094: CarriageRAnimation_DefaultName_NoDamage 17
+    2300096: CarriageRAnimation_DefaultName_NoDamage 18
+    2300098: CarriageRAnimation_DefaultName_NoDamage 19
+    2300100: CarriageRAnimation_DefaultName_NoDamage 2
+    2300102: CarriageRAnimation_DefaultName_NoDamage 20
+    2300104: CarriageRAnimation_DefaultName_NoDamage 21
+    2300106: CarriageRAnimation_DefaultName_NoDamage 22
+    2300108: CarriageRAnimation_DefaultName_NoDamage 23
+    2300110: CarriageRAnimation_DefaultName_NoDamage 24
+    2300112: CarriageRAnimation_DefaultName_NoDamage 25
+    2300114: CarriageRAnimation_DefaultName_NoDamage 26
+    2300116: CarriageRAnimation_DefaultName_NoDamage 27
+    2300118: CarriageRAnimation_DefaultName_NoDamage 28
+    2300120: CarriageRAnimation_DefaultName_NoDamage 3
+    2300122: CarriageRAnimation_DefaultName_NoDamage 4
+    2300124: CarriageRAnimation_DefaultName_NoDamage 5
+    2300126: CarriageRAnimation_DefaultName_NoDamage 6
+    2300128: CarriageRAnimation_DefaultName_NoDamage 7
+    2300130: CarriageRAnimation_DefaultName_NoDamage 8
+    2300132: CarriageRAnimation_DefaultName_NoDamage 9
+    2300134: CockpitCover_DefaultName_NoDamage
+    2300136: CockpitCover_DefaultName_NoDamage 1
+    2300138: DrawCall_0302
+    2300140: ElevatorL_DefaultName_NoDamage
+    2300142: ElevatorR_DefaultName_NoDamage
+    2300144: EngineCoverBone_DefaultName_NoDamage
+    2300146: EngineCoverBone_DefaultName_NoDamage 1
+    2300148: ForwardSlatL_DefaultName_NoDamage
+    2300150: ForwardSlatR_DefaultName_NoDamage
+    2300152: FrontCanopy_DefaultName_NoDamage
+    2300154: Rudder_DefaultName_NoDamage
+    2300156: Rudder_DefaultName_NoDamage 1
+    2300158: S_AlignPlane_0
+    2300160: S_Hitbox_Engine_0
+    2300162: S_Hitbox_Engine_1
+    2300164: S_Hitbox_Pilot_0
+    2300166: S_Rocket_0_6*HVAR_2*M8
+    2300168: S_Rocket_0_6*HVAR_2*M8 1
+    2300170: S_Rocket_0_6*HVAR_2*M8 2
+    2300172: S_Rocket_0_6*HVAR_2*M8 3
+    2300174: S_Rocket_0_6*HVAR_2*M8 4
+    2300176: S_Rocket_0_6*HVAR_2*M8 5
+    2300178: S_Rocket_1_6*HVAR_2*M8
+    2300180: S_Rocket_1_6*HVAR_2*M8 1
+    2300182: S_WingAirFlow_0
+    2300184: S_WingAirFlow_0 1
+    2300186: UnkownType_DefaultName_NoDamage
+    2300188: UnkownType_DefaultName_NoDamage 1
+    2300190: UnkownType_DefaultName_NoDamage 2
+    2300192: UnkownType_DefaultName_NoDamage 3
+    2300194: UnkownType_DefaultName_NoDamage 4
+    2300196: WingL_DefaultName_NoDamage
+    2300198: WingR_DefaultName_NoDamage
+    2300200: CarriageBackAnimation_DefaultName_NoDamage
+    2300202: CarriageBackAnimation_DefaultName_NoDamage 1
+    2300204: CarriageBackAnimation_DefaultName_NoDamage 2
+    2300206: CarriageBackAnimation_DefaultName_NoDamage 3
+    2300208: WeaponGroup_1*20mm_NoDamage
+    2300210: AttachedGroup_DefaultName_NoDamage
+    2300212: AttachedGroup_DefaultName_NoDamage 1
+    2300214: AttachedGroup_DefaultName_NoDamage 2
+    2300216: CarriageBackAnimation_DefaultName_NoDamage 4
+    2300218: CarriageBackAnimation_DefaultName_NoDamage 5
+    2300220: Elevator_DefaultName_NoDamage
+    2300222: Elevator_DefaultName_NoDamage 1
+    2300224: Engincowl_DefaultName_NoDamage
+    2300226: Engincowl_DefaultName_NoDamage 1
+    2300228: FlapL_DefaultName_NoDamage
+    2300230: FlapL_DefaultName_NoDamage 1
+    2300232: FlapR_DefaultName_NoDamage
+    2300234: FlapR_DefaultName_NoDamage 1
+    2300236: Object074
+    2300238: Object094
+    2300240: Object095
+    2300242: S_Hitbox_Engine_0 1
+    2300244: UnkownType_DefaultName_NoDamage 5
+    2300246: UnkownType_DefaultName_NoDamage 6
+    2300248: UnkownType_DefaultName_NoDamage 7
+    2300250: UnkownType_DefaultName_NoDamage 8
+    2300252: WingL_DefaultName_HeavyDamage
+    2300254: WingL_DefaultName_HeavyDamage 1
+    2300256: WingR_DefaultName_HeavyDamage
+    2300258: WingR_DefaultName_HeavyDamage 1
+    2300260: S_IR_decoy_0
+    2300262: AirBrake_DefaultName_NoDamage
+    2300264: AirBrake_DefaultName_NoDamage 1
+    2300266: AttachedGroup_2*M8_NoDamage
+    2300268: AttachedGroup_2*M8_NoDamage 1
+    2300270: S_Rocket_2*M8
+    2300272: S_Rocket_2*M8 1
+    2300274: FlapL_DefaultName_NoDamage 2
+    2300276: FlapR_DefaultName_NoDamage 2
+    2300278: Spoiler_DefaultName_NoDamage
+    2300280: Spoiler_DefaultName_NoDamage 1
+    2300282: Spoiler_DefaultName_NoDamage 2
+    2300284: Spoiler_DefaultName_NoDamage 3
+    2300286: Spoiler_DefaultName_NoDamage 4
+    2300288: Spoiler_DefaultName_NoDamage 5
+    3300000: AileronL_DefaultName_NoDamage
+    3300002: AileronR_DefaultName_NoDamage
+    3300004: AttachedGroup_6*HVAR_2*M8_NoDamage
+    3300006: AttachedGroup_6*HVAR_2*M8_NoDamage 1
+    3300008: AttachedGroup_6*HVAR_2*M8_NoDamage 2
+    3300010: AttachedGroup_6*HVAR_2*M8_NoDamage 3
+    3300012: AttachedGroup_6*HVAR_2*M8_NoDamage 4
+    3300014: AttachedGroup_6*HVAR_2*M8_NoDamage 5
+    3300016: AttachedGroup_6*HVAR_2*M8_NoDamage 6
+    3300018: AttachedGroup_6*HVAR_2*M8_NoDamage 7
+    3300020: B_BackCanopy
+    3300022: B_FrontCanopy
+    3300024: B_WingL
+    3300026: B_WingR
+    3300028: BackCanopy_DefaultName_NoDamage
+    3300030: CarriageBack_DefaultName_NoDamage
+    3300032: CarriageBack_DefaultName_NoDamage 1
+    3300034: CarriageBack_DefaultName_NoDamage 2
+    3300036: CarriageBack_DefaultName_NoDamage 3
+    3300038: CarriageL_DefaultName_NoDamage
+    3300040: CarriageL_DefaultName_NoDamage 1
+    3300042: CarriageL_DefaultName_NoDamage 2
+    3300044: CarriageLAnimation_DefaultName_NoDamage
+    3300046: CarriageLAnimation_DefaultName_NoDamage 1
+    3300048: CarriageLAnimation_DefaultName_NoDamage 10
+    3300050: CarriageLAnimation_DefaultName_NoDamage 11
+    3300052: CarriageLAnimation_DefaultName_NoDamage 12
+    3300054: CarriageLAnimation_DefaultName_NoDamage 2
+    3300056: CarriageLAnimation_DefaultName_NoDamage 3
+    3300058: CarriageLAnimation_DefaultName_NoDamage 4
+    3300060: CarriageLAnimation_DefaultName_NoDamage 5
+    3300062: CarriageLAnimation_DefaultName_NoDamage 6
+    3300064: CarriageLAnimation_DefaultName_NoDamage 7
+    3300066: CarriageLAnimation_DefaultName_NoDamage 8
+    3300068: CarriageLAnimation_DefaultName_NoDamage 9
+    3300070: CarriageR_DefaultName_NoDamage
+    3300072: CarriageR_DefaultName_NoDamage 1
+    3300074: CarriageR_DefaultName_NoDamage 2
+    3300076: CarriageRAnimation_DefaultName_NoDamage
+    3300078: CarriageRAnimation_DefaultName_NoDamage 1
+    3300080: CarriageRAnimation_DefaultName_NoDamage 10
+    3300082: CarriageRAnimation_DefaultName_NoDamage 11
+    3300084: CarriageRAnimation_DefaultName_NoDamage 12
+    3300086: CarriageRAnimation_DefaultName_NoDamage 13
+    3300088: CarriageRAnimation_DefaultName_NoDamage 14
+    3300090: CarriageRAnimation_DefaultName_NoDamage 15
+    3300092: CarriageRAnimation_DefaultName_NoDamage 16
+    3300094: CarriageRAnimation_DefaultName_NoDamage 17
+    3300096: CarriageRAnimation_DefaultName_NoDamage 18
+    3300098: CarriageRAnimation_DefaultName_NoDamage 19
+    3300100: CarriageRAnimation_DefaultName_NoDamage 2
+    3300102: CarriageRAnimation_DefaultName_NoDamage 20
+    3300104: CarriageRAnimation_DefaultName_NoDamage 21
+    3300106: CarriageRAnimation_DefaultName_NoDamage 22
+    3300108: CarriageRAnimation_DefaultName_NoDamage 23
+    3300110: CarriageRAnimation_DefaultName_NoDamage 24
+    3300112: CarriageRAnimation_DefaultName_NoDamage 25
+    3300114: CarriageRAnimation_DefaultName_NoDamage 26
+    3300116: CarriageRAnimation_DefaultName_NoDamage 27
+    3300118: CarriageRAnimation_DefaultName_NoDamage 28
+    3300120: CarriageRAnimation_DefaultName_NoDamage 3
+    3300122: CarriageRAnimation_DefaultName_NoDamage 4
+    3300124: CarriageRAnimation_DefaultName_NoDamage 5
+    3300126: CarriageRAnimation_DefaultName_NoDamage 6
+    3300128: CarriageRAnimation_DefaultName_NoDamage 7
+    3300130: CarriageRAnimation_DefaultName_NoDamage 8
+    3300132: CarriageRAnimation_DefaultName_NoDamage 9
+    3300134: CockpitCover_DefaultName_NoDamage
+    3300136: CockpitCover_DefaultName_NoDamage 1
+    3300138: DrawCall_0302
+    3300140: ElevatorL_DefaultName_NoDamage
+    3300142: ElevatorR_DefaultName_NoDamage
+    3300144: EngineCoverBone_DefaultName_NoDamage
+    3300146: EngineCoverBone_DefaultName_NoDamage 1
+    3300148: ForwardSlatL_DefaultName_NoDamage
+    3300150: ForwardSlatR_DefaultName_NoDamage
+    3300152: FrontCanopy_DefaultName_NoDamage
+    3300154: Rudder_DefaultName_NoDamage
+    3300156: Rudder_DefaultName_NoDamage 1
+    3300158: S_AlignPlane_0
+    3300160: S_Hitbox_Engine_0
+    3300162: S_Hitbox_Engine_1
+    3300164: S_Hitbox_Pilot_0
+    3300166: S_Rocket_0_6*HVAR_2*M8
+    3300168: S_Rocket_0_6*HVAR_2*M8 1
+    3300170: S_Rocket_0_6*HVAR_2*M8 2
+    3300172: S_Rocket_0_6*HVAR_2*M8 3
+    3300174: S_Rocket_0_6*HVAR_2*M8 4
+    3300176: S_Rocket_0_6*HVAR_2*M8 5
+    3300178: S_Rocket_1_6*HVAR_2*M8
+    3300180: S_Rocket_1_6*HVAR_2*M8 1
+    3300182: S_WingAirFlow_0
+    3300184: S_WingAirFlow_0 1
+    3300186: UnkownType_DefaultName_NoDamage
+    3300188: UnkownType_DefaultName_NoDamage 1
+    3300190: UnkownType_DefaultName_NoDamage 2
+    3300192: UnkownType_DefaultName_NoDamage 3
+    3300194: UnkownType_DefaultName_NoDamage 4
+    3300196: WingL_DefaultName_NoDamage
+    3300198: WingR_DefaultName_NoDamage
+    3300200: CarriageBackAnimation_DefaultName_NoDamage
+    3300202: CarriageBackAnimation_DefaultName_NoDamage 1
+    3300204: CarriageBackAnimation_DefaultName_NoDamage 2
+    3300206: CarriageBackAnimation_DefaultName_NoDamage 3
+    3300208: WeaponGroup_1*20mm_NoDamage
+    3300210: AttachedGroup_DefaultName_NoDamage
+    3300212: AttachedGroup_DefaultName_NoDamage 1
+    3300214: AttachedGroup_DefaultName_NoDamage 2
+    3300216: CarriageBackAnimation_DefaultName_NoDamage 4
+    3300218: CarriageBackAnimation_DefaultName_NoDamage 5
+    3300220: Elevator_DefaultName_NoDamage
+    3300222: Elevator_DefaultName_NoDamage 1
+    3300224: Engincowl_DefaultName_NoDamage
+    3300226: Engincowl_DefaultName_NoDamage 1
+    3300228: FlapL_DefaultName_NoDamage
+    3300230: FlapL_DefaultName_NoDamage 1
+    3300232: FlapR_DefaultName_NoDamage
+    3300234: FlapR_DefaultName_NoDamage 1
+    3300236: Object074
+    3300238: Object094
+    3300240: Object095
+    3300242: S_Hitbox_Engine_0 1
+    3300244: UnkownType_DefaultName_NoDamage 5
+    3300246: UnkownType_DefaultName_NoDamage 6
+    3300248: UnkownType_DefaultName_NoDamage 7
+    3300250: UnkownType_DefaultName_NoDamage 8
+    3300252: WingL_DefaultName_HeavyDamage
+    3300254: WingL_DefaultName_HeavyDamage 1
+    3300256: WingR_DefaultName_HeavyDamage
+    3300258: WingR_DefaultName_HeavyDamage 1
+    3300260: S_IR_decoy_0
+    3300262: AirBrake_DefaultName_NoDamage
+    3300264: AirBrake_DefaultName_NoDamage 1
+    3300266: AttachedGroup_2*M8_NoDamage
+    3300268: AttachedGroup_2*M8_NoDamage 1
+    3300270: S_Rocket_2*M8
+    3300272: S_Rocket_2*M8 1
+    3300274: FlapL_DefaultName_NoDamage 2
+    3300276: FlapR_DefaultName_NoDamage 2
+    3300278: Spoiler_DefaultName_NoDamage
+    3300280: Spoiler_DefaultName_NoDamage 1
+    3300282: Spoiler_DefaultName_NoDamage 2
+    3300284: Spoiler_DefaultName_NoDamage 3
+    3300286: Spoiler_DefaultName_NoDamage 4
+    3300288: Spoiler_DefaultName_NoDamage 5
+    4300000: B_BackCanopy
+    4300002: S_Rocket_1_6*HVAR_2*M8
+    4300004: S_Rocket_0_6*HVAR_2*M8
+    4300006: BackCanopy_DefaultName_NoDamage
+    4300008: Rudder_DefaultName_NoDamage
+    4300010: Rudder_DefaultName_NoDamage
+    4300012: ElevatorL_DefaultName_NoDamage
+    4300014: ElevatorR_DefaultName_NoDamage
+    4300016: UnkownType_DefaultName_NoDamage
+    4300018: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300020: UnkownType_DefaultName_NoDamage
+    4300022: DrawCall_0302
+    4300024: CarriageLAnimation_DefaultName_NoDamage
+    4300026: CarriageLAnimation_DefaultName_NoDamage
+    4300028: CarriageLAnimation_DefaultName_NoDamage
+    4300030: CarriageLAnimation_DefaultName_NoDamage
+    4300032: CarriageLAnimation_DefaultName_NoDamage
+    4300034: CarriageLAnimation_DefaultName_NoDamage
+    4300036: CarriageLAnimation_DefaultName_NoDamage
+    4300038: CarriageLAnimation_DefaultName_NoDamage
+    4300040: CarriageLAnimation_DefaultName_NoDamage
+    4300042: CarriageLAnimation_DefaultName_NoDamage
+    4300044: CarriageRAnimation_DefaultName_NoDamage
+    4300046: CarriageRAnimation_DefaultName_NoDamage
+    4300048: CarriageRAnimation_DefaultName_NoDamage
+    4300050: CarriageRAnimation_DefaultName_NoDamage
+    4300052: CarriageRAnimation_DefaultName_NoDamage
+    4300054: CarriageRAnimation_DefaultName_NoDamage
+    4300056: CarriageRAnimation_DefaultName_NoDamage
+    4300058: CarriageRAnimation_DefaultName_NoDamage
+    4300060: CarriageRAnimation_DefaultName_NoDamage
+    4300062: CarriageRAnimation_DefaultName_NoDamage
+    4300064: CarriageRAnimation_DefaultName_NoDamage
+    4300066: S_Rocket_0_6*HVAR_2*M8
+    4300068: S_Rocket_0_6*HVAR_2*M8
+    4300070: S_Rocket_0_6*HVAR_2*M8
+    4300072: S_Rocket_0_6*HVAR_2*M8
+    4300074: S_Rocket_1_6*HVAR_2*M8
+    4300076: S_Rocket_0_6*HVAR_2*M8
+    4300078: CarriageRAnimation_DefaultName_NoDamage
+    4300080: CarriageRAnimation_DefaultName_NoDamage
+    4300082: CarriageRAnimation_DefaultName_NoDamage
+    4300084: CarriageL_DefaultName_NoDamage
+    4300086: CarriageL_DefaultName_NoDamage
+    4300088: CarriageL_DefaultName_NoDamage
+    4300090: CarriageLAnimation_DefaultName_NoDamage
+    4300092: CarriageLAnimation_DefaultName_NoDamage
+    4300094: CarriageR_DefaultName_NoDamage
+    4300096: CarriageR_DefaultName_NoDamage
+    4300098: CarriageR_DefaultName_NoDamage
+    4300100: CarriageLAnimation_DefaultName_NoDamage
+    4300102: UnkownType_DefaultName_NoDamage
+    4300104: UnkownType_DefaultName_NoDamage
+    4300106: S_Hitbox_Engine_1
+    4300108: S_Hitbox_Engine_0
+    4300110: EngineCoverBone_DefaultName_NoDamage
+    4300112: EngineCoverBone_DefaultName_NoDamage
+    4300114: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300116: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300118: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300120: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300122: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300124: UnkownType_DefaultName_NoDamage
+    4300126: B_WingR
+    4300128: S_WingAirFlow_0
+    4300130: AileronR_DefaultName_NoDamage
+    4300132: ForwardSlatR_DefaultName_NoDamage
+    4300134: WingR_DefaultName_NoDamage
+    4300136: B_WingL
+    4300138: S_WingAirFlow_0
+    4300140: AileronL_DefaultName_NoDamage
+    4300142: ForwardSlatL_DefaultName_NoDamage
+    4300144: WingL_DefaultName_NoDamage
+    4300146: B_FrontCanopy
+    4300148: CarriageRAnimation_DefaultName_NoDamage
+    4300150: CarriageRAnimation_DefaultName_NoDamage
+    4300152: CarriageRAnimation_DefaultName_NoDamage
+    4300154: CarriageRAnimation_DefaultName_NoDamage
+    4300156: CarriageRAnimation_DefaultName_NoDamage
+    4300158: CarriageRAnimation_DefaultName_NoDamage
+    4300160: CarriageRAnimation_DefaultName_NoDamage
+    4300162: CarriageRAnimation_DefaultName_NoDamage
+    4300164: CarriageRAnimation_DefaultName_NoDamage
+    4300166: CarriageRAnimation_DefaultName_NoDamage
+    4300168: CarriageBack_DefaultName_NoDamage
+    4300170: CarriageBack_DefaultName_NoDamage
+    4300172: CarriageRAnimation_DefaultName_NoDamage
+    4300174: CarriageBack_DefaultName_NoDamage
+    4300176: CarriageBack_DefaultName_NoDamage
+    4300178: CarriageRAnimation_DefaultName_NoDamage
+    4300180: CarriageRAnimation_DefaultName_NoDamage
+    4300182: CarriageRAnimation_DefaultName_NoDamage
+    4300184: CarriageRAnimation_DefaultName_NoDamage
+    4300186: FrontCanopy_DefaultName_NoDamage
+    4300188: S_AlignPlane_0
+    4300190: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300192: AttachedGroup_6*HVAR_2*M8_NoDamage
+    4300194: CockpitCover_DefaultName_NoDamage
+    4300196: S_Hitbox_Pilot_0
+    4300198: CockpitCover_DefaultName_NoDamage
+    4300200: CarriageBackAnimation_DefaultName_NoDamage
+    4300202: CarriageBackAnimation_DefaultName_NoDamage
+    4300204: CarriageBackAnimation_DefaultName_NoDamage
+    4300206: CarriageBackAnimation_DefaultName_NoDamage
+    4300208: WeaponGroup_1*20mm_NoDamage
+    4300210: AttachedGroup_DefaultName_NoDamage
+    4300212: AttachedGroup_DefaultName_NoDamage
+    4300214: Elevator_DefaultName_NoDamage
+    4300216: CarriageBackAnimation_DefaultName_NoDamage
+    4300218: CarriageBackAnimation_DefaultName_NoDamage
+    4300220: Engincowl_DefaultName_NoDamage
+    4300222: Engincowl_DefaultName_NoDamage
+    4300224: AttachedGroup_DefaultName_NoDamage
+    4300226: Elevator_DefaultName_NoDamage
+    4300228: S_Hitbox_Engine_0
+    4300230: Object074
+    4300232: FlapR_DefaultName_NoDamage
+    4300234: FlapR_DefaultName_NoDamage
+    4300236: Object094
+    4300238: Object095
+    4300240: FlapL_DefaultName_NoDamage
+    4300242: FlapL_DefaultName_NoDamage
+    4300244: UnkownType_DefaultName_NoDamage
+    4300246: WingR_DefaultName_HeavyDamage
+    4300248: WingL_DefaultName_HeavyDamage
+    4300250: WingR_DefaultName_HeavyDamage
+    4300252: UnkownType_DefaultName_NoDamage
+    4300254: UnkownType_DefaultName_NoDamage
+    4300256: UnkownType_DefaultName_NoDamage
+    4300258: WingL_DefaultName_HeavyDamage
+    4300260: S_IR_decoy_0
+    4300262: AirBrake_DefaultName_NoDamage
+    4300264: AirBrake_DefaultName_NoDamage
+    4300266: S_Rocket_2*M8
+    4300268: S_Rocket_2*M8
+    4300270: AttachedGroup_2*M8_NoDamage
+    4300272: AttachedGroup_2*M8_NoDamage
+    4300274: FlapR_DefaultName_NoDamage
+    4300276: Spoiler_DefaultName_NoDamage
+    4300278: Spoiler_DefaultName_NoDamage
+    4300280: Spoiler_DefaultName_NoDamage
+    4300282: FlapL_DefaultName_NoDamage
+    4300284: Spoiler_DefaultName_NoDamage
+    4300286: Spoiler_DefaultName_NoDamage
+    4300288: Spoiler_DefaultName_NoDamage
+    7400000: Carriage
+    11100000: //RootNode
+    11400000: AileronL_DefaultName_NoDamage
+    11400002: AileronR_DefaultName_NoDamage
+    11400004: AttachedGroup_6*HVAR_2*M8_NoDamage
+    11400006: AttachedGroup_6*HVAR_2*M8_NoDamage 1
+    11400008: AttachedGroup_6*HVAR_2*M8_NoDamage 2
+    11400010: AttachedGroup_6*HVAR_2*M8_NoDamage 3
+    11400012: AttachedGroup_6*HVAR_2*M8_NoDamage 4
+    11400014: AttachedGroup_6*HVAR_2*M8_NoDamage 5
+    11400016: AttachedGroup_6*HVAR_2*M8_NoDamage 6
+    11400018: AttachedGroup_6*HVAR_2*M8_NoDamage 7
+    11400020: B_BackCanopy
+    11400022: B_FrontCanopy
+    11400024: B_WingL
+    11400026: B_WingL
+    11400028: B_WingR
+    11400030: BackCanopy_DefaultName_NoDamage
+    11400032: CarriageBack_DefaultName_NoDamage
+    11400034: CarriageBack_DefaultName_NoDamage 1
+    11400036: CarriageBack_DefaultName_NoDamage 2
+    11400038: CarriageBack_DefaultName_NoDamage 3
+    11400040: CarriageL_DefaultName_NoDamage
+    11400042: CarriageL_DefaultName_NoDamage 1
+    11400044: CarriageL_DefaultName_NoDamage 2
+    11400046: CarriageLAnimation_DefaultName_NoDamage
+    11400048: CarriageLAnimation_DefaultName_NoDamage 1
+    11400050: CarriageLAnimation_DefaultName_NoDamage 10
+    11400052: CarriageLAnimation_DefaultName_NoDamage 11
+    11400054: CarriageLAnimation_DefaultName_NoDamage 12
+    11400056: CarriageLAnimation_DefaultName_NoDamage 2
+    11400058: CarriageLAnimation_DefaultName_NoDamage 3
+    11400060: CarriageLAnimation_DefaultName_NoDamage 4
+    11400062: CarriageLAnimation_DefaultName_NoDamage 5
+    11400064: CarriageLAnimation_DefaultName_NoDamage 6
+    11400066: CarriageLAnimation_DefaultName_NoDamage 7
+    11400068: CarriageLAnimation_DefaultName_NoDamage 8
+    11400070: CarriageLAnimation_DefaultName_NoDamage 9
+    11400072: CarriageR_DefaultName_NoDamage
+    11400074: CarriageR_DefaultName_NoDamage 1
+    11400076: CarriageR_DefaultName_NoDamage 2
+    11400078: CarriageRAnimation_DefaultName_NoDamage
+    11400080: CarriageRAnimation_DefaultName_NoDamage 1
+    11400082: CarriageRAnimation_DefaultName_NoDamage 10
+    11400084: CarriageRAnimation_DefaultName_NoDamage 11
+    11400086: CarriageRAnimation_DefaultName_NoDamage 12
+    11400088: CarriageRAnimation_DefaultName_NoDamage 13
+    11400090: CarriageRAnimation_DefaultName_NoDamage 14
+    11400092: CarriageRAnimation_DefaultName_NoDamage 15
+    11400094: CarriageRAnimation_DefaultName_NoDamage 16
+    11400096: CarriageRAnimation_DefaultName_NoDamage 17
+    11400098: CarriageRAnimation_DefaultName_NoDamage 18
+    11400100: CarriageRAnimation_DefaultName_NoDamage 19
+    11400102: CarriageRAnimation_DefaultName_NoDamage 2
+    11400104: CarriageRAnimation_DefaultName_NoDamage 20
+    11400106: CarriageRAnimation_DefaultName_NoDamage 21
+    11400108: CarriageRAnimation_DefaultName_NoDamage 22
+    11400110: CarriageRAnimation_DefaultName_NoDamage 23
+    11400112: CarriageRAnimation_DefaultName_NoDamage 24
+    11400114: CarriageRAnimation_DefaultName_NoDamage 25
+    11400116: CarriageRAnimation_DefaultName_NoDamage 26
+    11400118: CarriageRAnimation_DefaultName_NoDamage 27
+    11400120: CarriageRAnimation_DefaultName_NoDamage 28
+    11400122: CarriageRAnimation_DefaultName_NoDamage 3
+    11400124: CarriageRAnimation_DefaultName_NoDamage 4
+    11400126: CarriageRAnimation_DefaultName_NoDamage 5
+    11400128: CarriageRAnimation_DefaultName_NoDamage 6
+    11400130: CarriageRAnimation_DefaultName_NoDamage 7
+    11400132: CarriageRAnimation_DefaultName_NoDamage 8
+    11400134: CarriageRAnimation_DefaultName_NoDamage 9
+    11400136: CockpitCover_DefaultName_NoDamage
+    11400138: CockpitCover_DefaultName_NoDamage 1
+    11400140: ElevatorL_DefaultName_NoDamage
+    11400142: ElevatorR_DefaultName_NoDamage
+    11400144: EngineCoverBone_DefaultName_NoDamage
+    11400146: EngineCoverBone_DefaultName_NoDamage
+    11400148: EngineCoverBone_DefaultName_NoDamage 1
+    11400150: EngineCoverBone_DefaultName_NoDamage 1
+    11400152: ForwardSlatL_DefaultName_NoDamage
+    11400154: ForwardSlatR_DefaultName_NoDamage
+    11400156: FrontCanopy_DefaultName_NoDamage
+    11400158: Rudder_DefaultName_NoDamage
+    11400160: Rudder_DefaultName_NoDamage 1
+    11400162: S_AlignPlane_0
+    11400164: S_EngineTurboEmitter_0
+    11400166: S_EngineTurboEmitter_0 1
+    11400168: S_Hitbox_Engine_0
+    11400170: S_Hitbox_Engine_1
+    11400172: S_Hitbox_Pilot_0
+    11400174: S_Rocket_0_6*HVAR_2*M8
+    11400176: S_Rocket_0_6*HVAR_2*M8 1
+    11400178: S_Rocket_0_6*HVAR_2*M8 2
+    11400180: S_Rocket_0_6*HVAR_2*M8 3
+    11400182: S_Rocket_0_6*HVAR_2*M8 4
+    11400184: S_Rocket_0_6*HVAR_2*M8 5
+    11400186: S_Rocket_1_6*HVAR_2*M8
+    11400188: S_Rocket_1_6*HVAR_2*M8 1
+    11400190: S_TurbulanceEmitter_0
+    11400192: S_TurbulanceEmitter_0 1
+    11400194: S_WingAirFlow_0
+    11400196: S_WingAirFlow_0 1
+    11400198: UnkownType_DefaultName_NoDamage
+    11400200: UnkownType_DefaultName_NoDamage 1
+    11400202: UnkownType_DefaultName_NoDamage 2
+    11400204: UnkownType_DefaultName_NoDamage 3
+    11400206: UnkownType_DefaultName_NoDamage 4
+    11400208: WingL_DefaultName_NoDamage
+    11400210: WingR_DefaultName_NoDamage
+    11400212: CarriageBackAnimation_DefaultName_NoDamage
+    11400214: CarriageBackAnimation_DefaultName_NoDamage 2
+    11400216: CarriageBackAnimation_DefaultName_NoDamage 3
+    11400218: CarriageBackAnimation_DefaultName_NoDamage 4
+    11400220: CarriageBackAnimation_DefaultName_NoDamage 5
+    11400222: EngineCoverBone_DefaultName_NoDamage 10
+    11400224: EngineCoverBone_DefaultName_NoDamage 11
+    11400226: EngineCoverBone_DefaultName_NoDamage 12
+    11400228: EngineCoverBone_DefaultName_NoDamage 13
+    11400230: EngineCoverBone_DefaultName_NoDamage 14
+    11400232: EngineCoverBone_DefaultName_NoDamage 15
+    11400234: EngineCoverBone_DefaultName_NoDamage 16
+    11400236: EngineCoverBone_DefaultName_NoDamage 17
+    11400238: EngineCoverBone_DefaultName_NoDamage 18
+    11400240: EngineCoverBone_DefaultName_NoDamage 19
+    11400242: EngineCoverBone_DefaultName_NoDamage 2
+    11400244: EngineCoverBone_DefaultName_NoDamage 20
+    11400246: EngineCoverBone_DefaultName_NoDamage 21
+    11400248: EngineCoverBone_DefaultName_NoDamage 3
+    11400250: EngineCoverBone_DefaultName_NoDamage 4
+    11400252: EngineCoverBone_DefaultName_NoDamage 5
+    11400254: EngineCoverBone_DefaultName_NoDamage 6
+    11400256: EngineCoverBone_DefaultName_NoDamage 7
+    11400258: EngineCoverBone_DefaultName_NoDamage 8
+    11400260: EngineCoverBone_DefaultName_NoDamage 9
+    11400262: CarriageBackAnimation_DefaultName_NoDamage 1
+    11400264: S_Cannon_20mmEmitter_1*20mm
+    11400266: WeaponGroup_1*20mm_NoDamage
+    11400268: S_IR_decoy _0
+    11400270: S_IR_decoy _0 1
+    11400272: S_EngineFireEmitter_0
+    11400274: S_EngineFireEmitter_0 1
+    11400276: AttachedGroup_DefaultName_NoDamage
+    11400278: AttachedGroup_DefaultName_NoDamage 1
+    11400280: AttachedGroup_DefaultName_NoDamage 2
+    11400282: Elevator_DefaultName_NoDamage
+    11400284: Elevator_DefaultName_NoDamage 1
+    11400286: Engincowl_DefaultName_NoDamage
+    11400288: Engincowl_DefaultName_NoDamage 1
+    11400290: FlapL_DefaultName_NoDamage
+    11400292: FlapL_DefaultName_NoDamage 1
+    11400294: FlapR_DefaultName_NoDamage
+    11400296: FlapR_DefaultName_NoDamage 1
+    11400298: S_EngineTurbo_Jet_0
+    11400300: S_EngineTurbo_Jet_0 1
+    11400302: S_Hitbox_Engine_0 1
+    11400304: UnkownType_DefaultName_NoDamage 5
+    11400306: S_LightDamageSmoke_0
+    11400308: S_LightDamageSmoke_0 1
+    11400310: S_LightDamageSmoke_1
+    11400312: S_LightDamageSmoke_1 1
+    11400314: S_LightDamageSmoke_2
+    11400316: S_LightDamageSmoke_2 1
+    11400318: S_LightDamageSmoke_3
+    11400320: S_LightDamageSmoke_3 1
+    11400322: UnkownType_DefaultName_NoDamage 6
+    11400324: UnkownType_DefaultName_NoDamage 7
+    11400326: UnkownType_DefaultName_NoDamage 8
+    11400328: WingL_DefaultName_HeavyDamage
+    11400330: WingL_DefaultName_HeavyDamage 1
+    11400332: WingR_DefaultName_HeavyDamage
+    11400334: WingR_DefaultName_HeavyDamage 1
+    11400336: AirBrake_DefaultName_NoDamage
+    11400338: AirBrake_DefaultName_NoDamage 1
+    11400340: AttachedGroup_2*M8_NoDamage
+    11400342: AttachedGroup_2*M8_NoDamage 1
+    11400344: S_Cannon_20mmEmitter_0
+    11400346: S_Rocket_2*M8
+    11400348: S_Rocket_2*M8 1
+    11400350: S_Cannon_20mmEmitter_2*7.62mm_2*20mm
+    11400352: FlapL_DefaultName_NoDamage 2
+    11400354: FlapR_DefaultName_NoDamage 2
+    11400356: Spoiler_DefaultName_NoDamage
+    11400358: Spoiler_DefaultName_NoDamage 1
+    11400360: Spoiler_DefaultName_NoDamage 2
+    11400362: Spoiler_DefaultName_NoDamage 3
+    11400364: Spoiler_DefaultName_NoDamage 4
+    11400366: Spoiler_DefaultName_NoDamage 5
+    11400368: S_TurbulanceEmitter_1
+    13700000: CarriageRAnimation_DefaultName_NoDamage 3
+    13700002: CarriageRAnimation_DefaultName_NoDamage 4
+    13700004: CarriageRAnimation_DefaultName_NoDamage 5
+    13700006: CarriageRAnimation_DefaultName_NoDamage 6
+    13700008: CarriageRAnimation_DefaultName_NoDamage 7
+    13700010: CarriageRAnimation_DefaultName_NoDamage 8
+    13700012: UnkownType_DefaultName_NoDamage
+    13700014: UnkownType_DefaultName_NoDamage 2
+    13700016: UnkownType_DefaultName_NoDamage 3
+    13700018: UnkownType_DefaultName_NoDamage 4
+    13700020: UnkownType_DefaultName_NoDamage 1
+  materials:
+    importMaterials: 0
+    materialName: 1
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Carriage
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 220
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: B_BackCanopy
+        weight: 1
+      - path: B_BackCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage
+        weight: 1
+      - path: B_BackCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage 2
+        weight: 1
+      - path: B_BackCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage 3
+        weight: 1
+      - path: B_BackCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage 4
+        weight: 1
+      - path: B_BackCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage 5
+        weight: 1
+      - path: B_BackCanopy/BackCanopy_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/CarriageL_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/CarriageL_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/CarriageL_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_BackCanopy/CarriageLAnimation_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/CarriageLAnimation_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/CarriageLAnimation_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_BackCanopy/CarriageR_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/CarriageR_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/CarriageR_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_BackCanopy/CarriageRAnimation_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/CarriageRAnimation_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/CarriageRAnimation_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_BackCanopy/ElevatorL_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/ElevatorR_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage/EngineCoverBone_DefaultName_NoDamage
+          7
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageLAnimation_DefaultName_NoDamage
+          4
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageLAnimation_DefaultName_NoDamage
+          4/CarriageLAnimation_DefaultName_NoDamage 6
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageLAnimation_DefaultName_NoDamage
+          4/CarriageLAnimation_DefaultName_NoDamage 7
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageLAnimation_DefaultName_NoDamage
+          4/CarriageLAnimation_DefaultName_NoDamage 8
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageRAnimation_DefaultName_NoDamage
+          11
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageRAnimation_DefaultName_NoDamage
+          11/CarriageRAnimation_DefaultName_NoDamage 12
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageRAnimation_DefaultName_NoDamage
+          11/CarriageRAnimation_DefaultName_NoDamage 13
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/CarriageRAnimation_DefaultName_NoDamage
+          11/CarriageRAnimation_DefaultName_NoDamage 14
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/EngineCoverBone_DefaultName_NoDamage
+          8
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 1/EngineCoverBone_DefaultName_NoDamage
+          8/EngineCoverBone_DefaultName_NoDamage 15
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 2/EngineCoverBone_DefaultName_NoDamage
+          6
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/CarriageLAnimation_DefaultName_NoDamage
+          3
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/CarriageLAnimation_DefaultName_NoDamage
+          5
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/CarriageRAnimation_DefaultName_NoDamage
+          9
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/CarriageRAnimation_DefaultName_NoDamage
+          10
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          9
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          9/CarriageLAnimation_DefaultName_NoDamage 9
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          9/CarriageRAnimation_DefaultName_NoDamage 15
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          9/EngineCoverBone_DefaultName_NoDamage 14
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          9/EngineCoverBone_DefaultName_NoDamage 14/CarriageLAnimation_DefaultName_NoDamage
+          10
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          9/EngineCoverBone_DefaultName_NoDamage 14/CarriageRAnimation_DefaultName_NoDamage
+          18
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          9/EngineCoverBone_DefaultName_NoDamage 14/EngineCoverBone_DefaultName_NoDamage
+          19
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          10
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          10/CarriageRAnimation_DefaultName_NoDamage 16
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          10/CarriageRAnimation_DefaultName_NoDamage 16/EngineCoverBone_DefaultName_NoDamage
+          18
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          10/CarriageRAnimation_DefaultName_NoDamage 16/EngineCoverBone_DefaultName_NoDamage
+          18/CarriageLAnimation_DefaultName_NoDamage 11
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          10/CarriageRAnimation_DefaultName_NoDamage 16/EngineCoverBone_DefaultName_NoDamage
+          18/CarriageLAnimation_DefaultName_NoDamage 12
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          10/CarriageRAnimation_DefaultName_NoDamage 16/EngineCoverBone_DefaultName_NoDamage
+          18/CarriageRAnimation_DefaultName_NoDamage 19
+        weight: 1
+      - path: B_BackCanopy/EngineCoverBone_DefaultName_NoDamage 3/EngineCoverBone_DefaultName_NoDamage
+          10/CarriageRAnimation_DefaultName_NoDamage 16/EngineCoverBone_DefaultName_NoDamage
+          18/CarriageRAnimation_DefaultName_NoDamage 20
+        weight: 1
+      - path: B_BackCanopy/Rudder_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/Rudder_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/S_EngineTurboEmitter_0
+        weight: 1
+      - path: B_BackCanopy/S_EngineTurboEmitter_0 1
+        weight: 1
+      - path: B_BackCanopy/S_Hitbox_Engine_0
+        weight: 1
+      - path: B_BackCanopy/S_Hitbox_Engine_1
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_0_6*HVAR_2*M8
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_0_6*HVAR_2*M8 1
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_0_6*HVAR_2*M8 2
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_0_6*HVAR_2*M8 3
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_0_6*HVAR_2*M8 4
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_0_6*HVAR_2*M8 5
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_1_6*HVAR_2*M8
+        weight: 1
+      - path: B_BackCanopy/S_Rocket_1_6*HVAR_2*M8 1
+        weight: 1
+      - path: B_BackCanopy/UnkownType_DefaultName_NoDamage
+        weight: 1
+      - path: B_BackCanopy/UnkownType_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_BackCanopy/UnkownType_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_BackCanopy/UnkownType_DefaultName_NoDamage 3
+        weight: 1
+      - path: B_BackCanopy/UnkownType_DefaultName_NoDamage 4
+        weight: 1
+      - path: B_FrontCanopy
+        weight: 1
+      - path: B_FrontCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage 6
+        weight: 1
+      - path: B_FrontCanopy/AttachedGroup_6*HVAR_2*M8_NoDamage 7
+        weight: 1
+      - path: B_FrontCanopy/CarriageBack_DefaultName_NoDamage
+        weight: 1
+      - path: B_FrontCanopy/CarriageBack_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_FrontCanopy/CarriageBack_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_FrontCanopy/CarriageBack_DefaultName_NoDamage 3
+        weight: 1
+      - path: B_FrontCanopy/CarriageBackAnimation_DefaultName_NoDamage
+        weight: 1
+      - path: B_FrontCanopy/CarriageBackAnimation_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_FrontCanopy/CarriageBackAnimation_DefaultName_NoDamage 2
+        weight: 1
+      - path: B_FrontCanopy/CarriageBackAnimation_DefaultName_NoDamage 3
+        weight: 1
+      - path: B_FrontCanopy/CarriageRAnimation_DefaultName_NoDamage 3
+        weight: 1
+      - path: B_FrontCanopy/CarriageRAnimation_DefaultName_NoDamage 4
+        weight: 1
+      - path: B_FrontCanopy/CarriageRAnimation_DefaultName_NoDamage 5
+        weight: 1
+      - path: B_FrontCanopy/CarriageRAnimation_DefaultName_NoDamage 6
+        weight: 1
+      - path: B_FrontCanopy/CarriageRAnimation_DefaultName_NoDamage 7
+        weight: 1
+      - path: B_FrontCanopy/CarriageRAnimation_DefaultName_NoDamage 8
+        weight: 1
+      - path: B_FrontCanopy/CockpitCover_DefaultName_NoDamage
+        weight: 1
+      - path: B_FrontCanopy/CockpitCover_DefaultName_NoDamage 1
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4/CarriageBackAnimation_DefaultName_NoDamage
+          4
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4/EngineCoverBone_DefaultName_NoDamage
+          12
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4/EngineCoverBone_DefaultName_NoDamage
+          12/CarriageBackAnimation_DefaultName_NoDamage 5
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4/EngineCoverBone_DefaultName_NoDamage
+          12/CarriageBackAnimation_DefaultName_NoDamage 5/EngineCoverBone_DefaultName_NoDamage
+          20
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4/EngineCoverBone_DefaultName_NoDamage
+          13
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4/EngineCoverBone_DefaultName_NoDamage
+          13/EngineCoverBone_DefaultName_NoDamage 17
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 4/EngineCoverBone_DefaultName_NoDamage
+          13/EngineCoverBone_DefaultName_NoDamage 17/EngineCoverBone_DefaultName_NoDamage
+          21
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 5
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 5/EngineCoverBone_DefaultName_NoDamage
+          11
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 5/EngineCoverBone_DefaultName_NoDamage
+          11/CarriageRAnimation_DefaultName_NoDamage 17
+        weight: 1
+      - path: B_FrontCanopy/EngineCoverBone_DefaultName_NoDamage 5/EngineCoverBone_DefaultName_NoDamage
+          11/EngineCoverBone_DefaultName_NoDamage 16
+        weight: 1
+      - path: B_FrontCanopy/FrontCanopy_DefaultName_NoDamage
+        weight: 1
+      - path: B_FrontCanopy/S_AlignPlane_0
+        weight: 1
+      - path: B_FrontCanopy/S_Hitbox_Pilot_0
+        weight: 1
+      - path: B_WingL
+        weight: 1
+      - path: B_WingL/AileronL_DefaultName_NoDamage
+        weight: 1
+      - path: B_WingL/ForwardSlatL_DefaultName_NoDamage
+        weight: 1
+      - path: B_WingL/S_TurbulanceEmitter_0
+        weight: 1
+      - path: B_WingL/S_WingAirFlow_0
+        weight: 1
+      - path: B_WingL/WingL_DefaultName_NoDamage
+        weight: 1
+      - path: B_WingR
+        weight: 1
+      - path: B_WingR/AileronR_DefaultName_NoDamage
+        weight: 1
+      - path: B_WingR/ForwardSlatR_DefaultName_NoDamage
+        weight: 1
+      - path: B_WingR/S_TurbulanceEmitter_0 1
+        weight: 1
+      - path: B_WingR/S_WingAirFlow_0 1
+        weight: 1
+      - path: B_WingR/WingR_DefaultName_NoDamage
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: '[OSPLANE]'
+  assetBundleName: 
+  assetBundleVariant: 
