@@ -5,7 +5,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 最大滚转角速度
     /// </summary>
-    public float MaxRollAcceleration = 270;
+    public float MaxRollAngularAcceleration = 270;
     /// <summary>
     /// 失速时对转向能力的影响
     /// </summary>
@@ -57,7 +57,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 飞机水平最大转向角速度
     /// </summary>
-    public float MaxTurnAngularVelocity = 45.0f;
+    public float MaxAngularVelocity = 45.0f;
     /// <summary>
 	/// 受损状态下的转向角速度缩放
 	/// </summary>

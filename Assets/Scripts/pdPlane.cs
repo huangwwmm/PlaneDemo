@@ -3,11 +3,9 @@
 public class pdPlane : MonoBehaviour
 {
     /// <summary>
-    /// equal 1 / 78
-    /// 78：这个值越大，转向加速度越小
     /// 试出来的效果理想的值
     /// </summary>
-    private const float MAX_TURN_ANGULAR_ACCELERATION_MULTIPLIER = 0.01282f;
+    private const float MAX_ANGULAR_ACCELERATION_MULTIPLIER = 1.2f;
 
     private pdBaseController m_Controller;
 
@@ -48,7 +46,7 @@ public class pdPlane : MonoBehaviour
     /// <summary>
     /// Roll轴最大角加速度
     /// </summary>
-    private float m_MaxRollAcceleration = 0;
+    private float m_MaxRollAngularAcceleration = 0;
     /// <summary>
     /// 大于0时，飞机失速
     /// </summary>
@@ -56,11 +54,11 @@ public class pdPlane : MonoBehaviour
     /// <summary>
     /// 最大转向角速度
     /// </summary>
-	private float m_MaxTurnAngularVelocity = 0;
+	private float m_MaxAngularVelocity = 0;
     /// <summary>
     /// 最大转向加速度
     /// </summary>
-    private float m_MaxTurnAngularAcceleration = 0;
+    private float m_MaxAngularAcceleration = 0;
     /// <summary>
     /// 是否是高G转弯
     /// <see cref="http://acecombat.wikia.com/wiki/High-G_Turn"/>
@@ -130,55 +128,54 @@ public class pdPlane : MonoBehaviour
         m_PropulsiveSpeed = Vector3.Dot(m_Velocity, m_Transform.forward);
 
         #region 计算转向能力
-        // 飞机挂载对飞机转向能力的影响
-        // 这个数值越大，飞机转向能力越差。为0时，不影响飞机滚转
-        // UNDONE 还没做飞机挂载
-        float m_RotateReductionRatioByPayload = 0;
+        // 转向能力的影响因素
+        float angularFactorsAffect = 1.0f;
 
-        m_MaxRollAcceleration = m_TweakableProerties.MaxRollAcceleration
-            // 失速时转向能力降低
-            * ((1.0f - Mathf.Clamp01(m_StallAmount * 2.0f)) * m_TweakableProerties.AngularSpeedReduceByStallNormalized)
-            // 挂载组对转向的影响
-            * (1.0f - m_RotateReductionRatioByPayload)
-            // 引擎受损时转向的影响 UNDONE 还没做飞机引擎
-            * (false ? m_TweakableProerties.RollAngularSpeedScaleWhenDamaged : 1);
+        // 飞机挂载对飞机转向能力的影响
+        {
+            // 这个数值越大，飞机转向能力越差。为0时，不影响飞机滚转
+            // UNDONE 还没做飞机挂载
+            float rotateReductionRatioByPayload = 0;
+            angularFactorsAffect *= 1.0f - rotateReductionRatioByPayload;
+        }
+
+        // 失速时转向能力降低
+        angularFactorsAffect *= (1.0f - Mathf.Clamp01(m_StallAmount * 2.0f)) * m_TweakableProerties.AngularSpeedReduceByStallNormalized;
+
+        // 引擎受损时转向的影响 UNDONE 还没做飞机引擎
+        angularFactorsAffect *= false ? m_TweakableProerties.RollAngularSpeedScaleWhenDamaged : 1;
 
         // 速度对转向能力的影响
-        Keyframe[] angularSpeedFactorsAffectByPropulsiveSpeed = new Keyframe[3]; // Keyframe is struct, not have GC
-        angularSpeedFactorsAffectByPropulsiveSpeed[0].time = m_TweakableProerties.LowSpeed;
-        angularSpeedFactorsAffectByPropulsiveSpeed[0].value = m_TweakableProerties.TurnAngularSpeedFactor_LowSpeed;
-        angularSpeedFactorsAffectByPropulsiveSpeed[1].time = m_TweakableProerties.NormalSpeed;
-        angularSpeedFactorsAffectByPropulsiveSpeed[1].value = 1.0f;
-        angularSpeedFactorsAffectByPropulsiveSpeed[2].time = m_TweakableProerties.HightSpeed;
-        angularSpeedFactorsAffectByPropulsiveSpeed[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightSpeed;
-        // 速度对转向能力的影响 TODO 如果效果不好，再考虑特殊处理
-        float angularSpeedFactorAffectByPropulsiveSpeed = hwmUtility.Evaluate(m_PropulsiveSpeed, angularSpeedFactorsAffectByPropulsiveSpeed);
+        Keyframe[] angularAffectCache = new Keyframe[3]; // Keyframe is struct, not have GC
+        {
+            angularAffectCache[0].time = m_TweakableProerties.LowSpeed;
+            angularAffectCache[0].value = m_TweakableProerties.TurnAngularSpeedFactor_LowSpeed;
+            angularAffectCache[1].time = m_TweakableProerties.NormalSpeed;
+            angularAffectCache[1].value = 1.0f;
+            angularAffectCache[2].time = m_TweakableProerties.HightSpeed;
+            angularAffectCache[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightSpeed;
+            // 速度对转向能力的影响 TODO 如果效果不好，再考虑特殊处理
+            angularFactorsAffect *= hwmUtility.Evaluate(m_PropulsiveSpeed, angularAffectCache);
+        }
 
         // 高度对旋转能力的影响
-        Keyframe[] angularSpeedFactorsAffectByHeight = new Keyframe[3]; // Keyframe is struct, not have GC
-        angularSpeedFactorsAffectByHeight[0].time = m_TweakableProerties.LowHeight;
-        angularSpeedFactorsAffectByHeight[0].value = m_TweakableProerties.TurnAngularSpeedFactor_LowHeight;
-        angularSpeedFactorsAffectByHeight[1].time = m_TweakableProerties.NormalHeight;
-        angularSpeedFactorsAffectByHeight[1].value = 1.0f;
-        angularSpeedFactorsAffectByHeight[2].time = m_TweakableProerties.HightHeight;
-        angularSpeedFactorsAffectByHeight[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightHeight;
-        // 飞行高度对转向能力的影响
-        float angularSpeedFactorAffectByHeight = hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), angularSpeedFactorsAffectByHeight);
+        {
+            angularAffectCache[0].time = m_TweakableProerties.LowHeight;
+            angularAffectCache[0].value = m_TweakableProerties.TurnAngularSpeedFactor_LowHeight;
+            angularAffectCache[1].time = m_TweakableProerties.NormalHeight;
+            angularAffectCache[1].value = 1.0f;
+            angularAffectCache[2].time = m_TweakableProerties.HightHeight;
+            angularAffectCache[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightHeight;
+            // 飞行高度对转向能力的影响
+            angularFactorsAffect *= hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), angularAffectCache);
+        }
 
-        m_MaxTurnAngularVelocity = m_TweakableProerties.MaxTurnAngularVelocity
-            // 推进速度
-            * angularSpeedFactorAffectByPropulsiveSpeed
-            // 飞行高度
-            * angularSpeedFactorAffectByHeight
-            // 失速
-            * (1.0f - Mathf.Clamp01(m_StallAmount * 4.0f)
-                * m_TweakableProerties.AngularSpeedReduceByStallNormalized)
-            // 机翼受伤 UNDONE 还没做机翼
-            * (false ? m_TweakableProerties.TurnAngularSpeedScaleWhenDamaged : 1)
-            // 挂载组
-            * (1.0f - m_RotateReductionRatioByPayload);
+        // 机翼受伤时转向的影响 UNDONE 还没做机翼
+        angularFactorsAffect *= false ? m_TweakableProerties.TurnAngularSpeedScaleWhenDamaged : 1;
 
-        m_MaxTurnAngularAcceleration = m_MaxTurnAngularVelocity * m_MaxRollAcceleration * MAX_TURN_ANGULAR_ACCELERATION_MULTIPLIER;
+        m_MaxRollAngularAcceleration = m_TweakableProerties.MaxRollAngularAcceleration * angularFactorsAffect;
+        m_MaxAngularVelocity = m_TweakableProerties.MaxAngularVelocity * angularFactorsAffect;
+        m_MaxAngularAcceleration = m_MaxAngularVelocity * MAX_ANGULAR_ACCELERATION_MULTIPLIER;
         #endregion
 
         #region 获取杆量输入
@@ -236,7 +233,7 @@ public class pdPlane : MonoBehaviour
 
         // 更新角速度
         Vector2 angularVelocity = AxisToAngularVelocity(m_Axis);
-        m_AngularVelocity = Vector2.MoveTowards(m_AngularVelocity, angularVelocity, delta * m_MaxTurnAngularAcceleration);
+        m_AngularVelocity = Vector2.MoveTowards(m_AngularVelocity, angularVelocity, delta * m_MaxAngularAcceleration);
 
         // UNDONE 角度计算这里没太看懂，记得重新算一遍
         Quaternion qOldWorld = m_Transform.localRotation;
@@ -303,19 +300,19 @@ public class pdPlane : MonoBehaviour
                     ? targetRollAcceleration
                     : -targetRollAcceleration;
 
-                targetRollAcceleration = hwmUtility.ClampAbs(targetRollAcceleration, m_MaxRollAcceleration);
+                targetRollAcceleration = hwmUtility.ClampAbs(targetRollAcceleration, m_MaxRollAngularAcceleration);
             }
         }
         else
         {
-            targetRollAcceleration = Mathf.Clamp(inputRoll, -1.0f, 1.0f) * m_MaxRollAcceleration;
+            targetRollAcceleration = Mathf.Clamp(inputRoll, -1.0f, 1.0f) * m_MaxRollAngularAcceleration;
         }
 
         targetRollAcceleration *= Mathf.Clamp01(1.0f - m_StallAmount * 10.0f);
 
         m_RollAcceleration = Mathf.MoveTowards(m_RollAcceleration
             , targetRollAcceleration
-            , m_MaxRollAcceleration * delta * 2.0f); // 实际Roll操作时，Roll的角加速度
+            , m_MaxRollAngularAcceleration * delta * 2.0f); // 实际Roll操作时，Roll的角加速度
 
         Quaternion rollDelta = Quaternion.AngleAxis(m_RollAcceleration * delta, forward);
         m_Transform.localRotation = rollDelta * worldRotation;
@@ -436,8 +433,8 @@ public class pdPlane : MonoBehaviour
 	/// <returns></returns>
 	public Vector2 AxisToAngularVelocity(Vector2 axis)
     {
-        Vector2 angularVelocity = new Vector2(axis.y * m_MaxTurnAngularVelocity
-            , axis.x * m_MaxTurnAngularVelocity);
+        Vector2 angularVelocity = new Vector2(axis.y * m_MaxAngularVelocity
+            , axis.x * m_MaxAngularVelocity);
 
         if (m_IsHighGTurn)
         {
@@ -460,7 +457,7 @@ public class pdPlane : MonoBehaviour
         // 算这个magnitudeScale是因为，我假设椭圆上的点到圆心的半径与角度的关系为linear的。所以根据rotateVector算一个角度，再根据角度算magnitudeScale
         float magnitudeScale = 1 - angularValue;
 
-        float differentAngular = m_MaxTurnAngularVelocity * magnitudeScale - m_AngularVelocity.magnitude;
+        float differentAngular = m_MaxAngularVelocity * magnitudeScale - m_AngularVelocity.magnitude;
         // 1.5 就是一个估计值
         return differentAngular < 1.5f;
     }
