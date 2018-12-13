@@ -323,104 +323,109 @@ public class pdPlane : MonoBehaviour
 
         #region 更新节流阀(速度)
         // 飞机在径向和轴向上的阻力
-        // 本地坐标系下的速度
-		Vector3 velocity_LocalSpace = m_Transform.InverseTransformDirection(m_Velocity);
-        // -(V * V)
-        Vector3 dragForce_LocalSpace = new Vector3(-velocity_LocalSpace.x * Mathf.Abs(velocity_LocalSpace.x),
-            -velocity_LocalSpace.y * Mathf.Abs(velocity_LocalSpace.y),
-            -velocity_LocalSpace.z * Mathf.Abs(velocity_LocalSpace.z));
-        // -(V * V) * D
-        dragForce_LocalSpace.Scale(new Vector3(m_TweakableProerties.VerticalDrag
-            , m_TweakableProerties.VerticalDrag
-            , m_Throttle == ThrottleState.Brake
-                ? m_TweakableProerties.PropulsiveDrag_Brake
-                : m_Throttle == ThrottleState.BrakeII
-                    ? m_TweakableProerties.PropulsiveDrag_BrakeII
-                    : m_TweakableProerties.PropulsiveDrag));
-        Vector3 dragAcceleration_LocalSpace = dragForce_LocalSpace; // 加速度 = 阻力 / 自身质量，这里假设自身质量为1
-        // 旋转阻力加速度
-        float verticalDragAcceleration = Mathf.Sqrt(dragAcceleration_LocalSpace.x * dragAcceleration_LocalSpace.x 
-            + dragAcceleration_LocalSpace.y * dragAcceleration_LocalSpace.y);
-        if (verticalDragAcceleration > Mathf.Epsilon)
         {
-            //限制径向阻力的最大值
-            float clampedVerticalDragAcceleration = Mathf.Min(verticalDragAcceleration, m_TweakableProerties.MaxVerticalDragDeceleration);
-            float clampVerticalDragScale = clampedVerticalDragAcceleration / verticalDragAcceleration;
-            dragAcceleration_LocalSpace.x *= clampVerticalDragScale;
-            dragAcceleration_LocalSpace.y *= clampVerticalDragScale;
+            // 本地坐标系下的速度
+            Vector3 velocity_LocalSpace = m_Transform.InverseTransformDirection(m_Velocity);
+            // 空气阻力
+            Vector3 dragForce_LocalSpace = hwmUtility.CalculateDrag(velocity_LocalSpace
+                , new Vector3(m_TweakableProerties.VerticalDragCoefficient
+                    , m_TweakableProerties.VerticalDragCoefficient
+                    , m_Throttle == ThrottleState.Brake
+                        ? m_TweakableProerties.PropulsiveDragCoefficient_Brake
+                        : m_Throttle == ThrottleState.BrakeII
+                            ? m_TweakableProerties.PropulsiveDragCoefficient_BrakeII
+                            : m_TweakableProerties.PropulsiveDragCoefficient));
+            // a = F / m (加速度 = 阻力 / 自身质量), 为简化计算, 这里假设自身质量为1
+            Vector3 dragAcceleration_LocalSpace = dragForce_LocalSpace; 
+            // 旋转阻力加速度
+            float verticalDragAcceleration = Mathf.Sqrt(dragAcceleration_LocalSpace.x * dragAcceleration_LocalSpace.x
+                + dragAcceleration_LocalSpace.y * dragAcceleration_LocalSpace.y);
+            if (verticalDragAcceleration > Mathf.Epsilon)
+            {
+                //限制径向阻力的最大值
+                float clampedVerticalDragAcceleration = Mathf.Min(verticalDragAcceleration, m_TweakableProerties.MaxVerticalDragDeceleration);
+                float clampVerticalDragScale = clampedVerticalDragAcceleration / verticalDragAcceleration;
+                dragAcceleration_LocalSpace.x *= clampVerticalDragScale;
+                dragAcceleration_LocalSpace.y *= clampVerticalDragScale;
+            }
+
+            // 阻力对速度的影响
+            Vector3 velocityChangeCausedByDrag = dragAcceleration_LocalSpace * delta;
+            // 阻力不能大于速率
+            velocityChangeCausedByDrag.x = Mathf.Sign(velocityChangeCausedByDrag.x)
+                * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.x), Mathf.Abs(velocity_LocalSpace.x));
+            velocityChangeCausedByDrag.y = Mathf.Sign(velocityChangeCausedByDrag.y)
+                * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.y), Mathf.Abs(velocity_LocalSpace.y));
+            velocityChangeCausedByDrag.z = Mathf.Sign(velocityChangeCausedByDrag.z)
+                * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.z), Mathf.Abs(velocity_LocalSpace.z));
+            velocityChangeCausedByDrag = m_Transform.TransformDirection(velocityChangeCausedByDrag);
+
+            m_Velocity += velocityChangeCausedByDrag;
         }
-
-        // 阻力对速度的影响
-        Vector3 velocityChangeCausedByDrag = dragAcceleration_LocalSpace * delta;
-        // 阻力不能大于速率
-        velocityChangeCausedByDrag.x = Mathf.Sign(velocityChangeCausedByDrag.x)
-            * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.x), Mathf.Abs(velocity_LocalSpace.x));
-        velocityChangeCausedByDrag.y = Mathf.Sign(velocityChangeCausedByDrag.y)
-            * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.y), Mathf.Abs(velocity_LocalSpace.y));
-        velocityChangeCausedByDrag.z = Mathf.Sign(velocityChangeCausedByDrag.z)
-            * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.z), Mathf.Abs(velocity_LocalSpace.z));
-        velocityChangeCausedByDrag = m_Transform.TransformDirection(velocityChangeCausedByDrag);
-
-        m_Velocity += velocityChangeCausedByDrag;
 
         // 引擎推力
-        float thrustPower;
-        switch (m_Throttle)
         {
-            case ThrottleState.BoostII:
-                thrustPower = m_TweakableProerties.ThrustPower_BoostII;
-                break;
-            case ThrottleState.Boost:
-                thrustPower = m_TweakableProerties.ThrustPower_Boost;
-                break;
-            case ThrottleState.Normal:
-                thrustPower = m_TweakableProerties.ThrustPower_Normal;
-                break;
-            case ThrottleState.Brake:
-                thrustPower = m_TweakableProerties.ThrustPower_Brake;
-                break;
-            case ThrottleState.BrakeII:
-                thrustPower = m_TweakableProerties.ThrustPower_BrakeII;
-                break;
-            default:
-                thrustPower = 0;
-                hwmDebug.Assert(false, "Invalid Throttle: " + m_Throttle);
-                break;
+            float thrustPower;
+            switch (m_Throttle)
+            {
+                case ThrottleState.BoostII:
+                    thrustPower = m_TweakableProerties.ThrustPower_BoostII;
+                    break;
+                case ThrottleState.Boost:
+                    thrustPower = m_TweakableProerties.ThrustPower_Boost;
+                    break;
+                case ThrottleState.Normal:
+                    thrustPower = m_TweakableProerties.ThrustPower_Normal;
+                    break;
+                case ThrottleState.Brake:
+                    thrustPower = m_TweakableProerties.ThrustPower_Brake;
+                    break;
+                case ThrottleState.BrakeII:
+                    thrustPower = m_TweakableProerties.ThrustPower_BrakeII;
+                    break;
+                default:
+                    thrustPower = 0;
+                    hwmDebug.Assert(false, "Invalid Throttle: " + m_Throttle);
+                    break;
+            }
+
+            // 高度对速度的影响
+            {
+                float thrustPowerFactorAffectByHeight;
+                Keyframe[] thrustAccelerationFactorsAffectByHeight = new Keyframe[3]; // Keyframe is struct, not have GC
+                thrustAccelerationFactorsAffectByHeight[0].time = m_TweakableProerties.LowHeight;
+                thrustAccelerationFactorsAffectByHeight[0].value = m_TweakableProerties.ThrustPowerFactor_LowHeight;
+                thrustAccelerationFactorsAffectByHeight[1].time = m_TweakableProerties.NormalHeight;
+                thrustAccelerationFactorsAffectByHeight[1].value = 1.0f;
+                thrustAccelerationFactorsAffectByHeight[2].time = m_TweakableProerties.HightHeight;
+                thrustAccelerationFactorsAffectByHeight[2].value = m_TweakableProerties.ThrustPowerFactor_HightHeight;
+                thrustPowerFactorAffectByHeight = hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), thrustAccelerationFactorsAffectByHeight);
+
+                thrustPower *= thrustPowerFactorAffectByHeight;
+            }
+
+            float m_ThrustAcceleration = hwmUtility.PowerToAcceleration(thrustPower, m_PropulsiveSpeed, 1.0f, delta);
+            m_ThrustAcceleration = Mathf.Min(m_ThrustAcceleration, m_TweakableProerties.MaxThrustAcceleration);
+
+            // 计算由重力产生的减速度、加速度
+            float climbAngle = -Mathf.DeltaAngle(0, m_Transform.eulerAngles.x);
+            float climbAmount = Mathf.Clamp(Mathf.Sin(climbAngle * Mathf.Deg2Rad), -1.0f, 1.0f);
+            float propulsiveGravityAcceleration = climbAmount > 0
+                ? Mathf.Lerp(0, -m_TweakableProerties.GravityDeceleration, climbAmount)
+                : Mathf.Lerp(0, m_TweakableProerties.GravityAcceleration, -climbAmount);
+
+            // 计算前向加速度
+            float propulsiveAcceleration = m_ThrustAcceleration + propulsiveGravityAcceleration;
+
+            float newPropulsiveSpeed = m_PropulsiveSpeed + propulsiveAcceleration * delta;
+            newPropulsiveSpeed = Mathf.Min(newPropulsiveSpeed, m_TweakableProerties.MaxPropulsiveSpeed);
+
+            float deltaSpeed = newPropulsiveSpeed - m_PropulsiveSpeed;
+            m_Velocity += (m_Transform.forward * deltaSpeed);
         }
+        #endregion
 
-        // 高度对速度的影响
-        {
-            float thrustPowerFactorAffectByHeight;
-            Keyframe[] thrustAccelerationFactorsAffectByHeight = new Keyframe[3]; // Keyframe is struct, not have GC
-            thrustAccelerationFactorsAffectByHeight[0].time = m_TweakableProerties.LowHeight;
-            thrustAccelerationFactorsAffectByHeight[0].value = m_TweakableProerties.ThrustPowerFactor_LowHeight;
-            thrustAccelerationFactorsAffectByHeight[1].time = m_TweakableProerties.NormalHeight;
-            thrustAccelerationFactorsAffectByHeight[1].value = 1.0f;
-            thrustAccelerationFactorsAffectByHeight[2].time = m_TweakableProerties.HightHeight;
-            thrustAccelerationFactorsAffectByHeight[2].value = m_TweakableProerties.ThrustPowerFactor_HightHeight;
-            thrustPowerFactorAffectByHeight = hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), thrustAccelerationFactorsAffectByHeight);
-
-            thrustPower *= thrustPowerFactorAffectByHeight;
-        }
-
-        float m_ThrustAcceleration = hwmUtility.PowerToAcceleration(thrustPower, m_PropulsiveSpeed, 1.0f, delta);
-        m_ThrustAcceleration = Mathf.Min(m_ThrustAcceleration, m_TweakableProerties.MaxThrustAcceleration);
-
-        // 计算由重力产生的减速度、加速度
-        float climbAngle = -Mathf.DeltaAngle(0, m_Transform.eulerAngles.x);
-        float climbAmount = Mathf.Clamp(Mathf.Sin(climbAngle * Mathf.Deg2Rad), -1.0f, 1.0f);
-        float propulsiveGravityAcceleration = climbAmount > 0
-            ? Mathf.Lerp(0, -m_TweakableProerties.GravityDeceleration, climbAmount)
-            : Mathf.Lerp(0, m_TweakableProerties.GravityAcceleration, -climbAmount);
-
-        // 计算前向加速度
-        float propulsiveAcceleration = m_ThrustAcceleration + propulsiveGravityAcceleration;
-
-        float newPropulsiveSpeed = m_PropulsiveSpeed + propulsiveAcceleration * delta;
-        newPropulsiveSpeed = Mathf.Min(newPropulsiveSpeed, m_TweakableProerties.MaxPropulsiveSpeed);
-
-        float deltaSpeed = newPropulsiveSpeed - m_PropulsiveSpeed;
-        m_Velocity += (m_Transform.forward * deltaSpeed);
+        #region 更新失速
         #endregion
     }
 

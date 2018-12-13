@@ -198,5 +198,36 @@ public static class hwmUtility
         return (newSpeed - currentSpeed) / delta;
     }
 
+    /// <summary>
+    /// 计算物体受到的空气阻力
+    /// 
+    /// 参考流体力学的阻力方程：F_D = 0.5 * p * v^2 * C_D * A <see cref="https://en.wikipedia.org/wiki/Drag_equation"/>
+    /// F_D: 阻力
+    /// ρ: 流体密度
+    /// v: 物体速度
+    /// A: 参考面积
+    /// C_D: 阻力系数, 是一个无因次的系数, 像汽车的阻力系数约在0.25到0.4之间
+    /// 
+    /// 计算的阻力是有方向的, 且方向和速度相反
+    /// 降低复杂度, 忽略流体密度和参考面积
+    /// 所以这里用公式
+    ///     F_D = 0.5 * (-v * |v|) * C_D
+    /// </summary>
+    /// <param name="velocity">速度(v)</param>
+    /// <param name="dragCoefficient">阻力系数(C_D)</param>
+    /// <returns>速度相反方向的阻力(F_D)</returns>
+    public static Vector3 CalculateDrag(Vector3 velocity, Vector3 dragCoefficient)
+    {
+        // -v * |v|
+        Vector3 dragForce = new Vector3(-velocity.x * Mathf.Abs(velocity.x),
+            -velocity.y * Mathf.Abs(velocity.y),
+            -velocity.z * Mathf.Abs(velocity.z));
+
+        // (-v * |v|) * C_D
+        dragForce.Scale(dragCoefficient);
+
+        // 0.5 * (-v * |v|) * C_D
+        return dragForce * 0.5f;
+    }
     #endregion
 }
