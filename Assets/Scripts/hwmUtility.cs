@@ -176,5 +176,27 @@ public static class hwmUtility
     {
         return Mathf.Sign(value) * Mathf.Min(Mathf.Abs(value), maxAbs);
     }
+
+    /// <summary>
+    /// 计算施加推力后，产生的加速度
+    /// kinetic energy：E_k = 1 / 2 * m * v^2 <see cref="https://en.wikipedia.org/wiki/Kinetic_energy"/>
+    /// </summary>
+    /// <param name="power">推力</param>
+    /// <param name="currentSpeed">当前速度</param>
+    /// <param name="mass">质量</param>
+    /// <param name="delta">持续时间</param>
+    /// <returns>加速度</returns>
+    public static float PowerToAcceleration(float power, float currentSpeed, float mass, float delta)
+    {
+        hwmDebug.Assert(mass > Mathf.Epsilon, "mass > Mathf.Epsilon");
+
+        // 施加推力后的动能
+        float kineticEnergy = 0.5f * mass * currentSpeed * currentSpeed // 当前的动能
+            + power * delta;
+        kineticEnergy = Mathf.Max(0, kineticEnergy); // HACK 减速时，如果速度过慢，动能可能小于0。暂不支持飞机倒飞，所以动能最小为0
+        float newSpeed = Mathf.Sqrt(kineticEnergy * 2.0f / mass); // 用动能算速度
+        return (newSpeed - currentSpeed) / delta;
+    }
+
     #endregion
 }

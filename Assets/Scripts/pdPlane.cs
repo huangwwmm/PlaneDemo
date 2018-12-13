@@ -150,7 +150,7 @@ public class pdPlane : MonoBehaviour
         angularSpeedFactorsAffectByPropulsiveSpeed[1].time = m_TweakableProerties.NormalSpeed;
         angularSpeedFactorsAffectByPropulsiveSpeed[1].value = 1.0f;
         angularSpeedFactorsAffectByPropulsiveSpeed[2].time = m_TweakableProerties.HightSpeed;
-        angularSpeedFactorsAffectByPropulsiveSpeed[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HighSpeed;
+        angularSpeedFactorsAffectByPropulsiveSpeed[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightSpeed;
         // 速度对转向能力的影响 TODO 如果效果不好，再考虑特殊处理
         float angularSpeedFactorAffectByPropulsiveSpeed = hwmUtility.Evaluate(m_PropulsiveSpeed, angularSpeedFactorsAffectByPropulsiveSpeed);
 
@@ -161,7 +161,7 @@ public class pdPlane : MonoBehaviour
         angularSpeedFactorsAffectByHeight[1].time = m_TweakableProerties.NormalHeight;
         angularSpeedFactorsAffectByHeight[1].value = 1.0f;
         angularSpeedFactorsAffectByHeight[2].time = m_TweakableProerties.HightHeight;
-        angularSpeedFactorsAffectByHeight[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HighestHeight;
+        angularSpeedFactorsAffectByHeight[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightHeight;
         // 飞行高度对转向能力的影响
         float angularSpeedFactorAffectByHeight = hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), angularSpeedFactorsAffectByHeight);
 
@@ -362,6 +362,65 @@ public class pdPlane : MonoBehaviour
         velocityChangeCausedByDrag = m_Transform.TransformDirection(velocityChangeCausedByDrag);
 
         m_Velocity += velocityChangeCausedByDrag;
+
+        // 引擎推力
+        float thrustPower;
+        switch (m_Throttle)
+        {
+            case ThrottleState.BoostII:
+                thrustPower = m_TweakableProerties.ThrustPower_BoostII;
+                break;
+            case ThrottleState.Boost:
+                thrustPower = m_TweakableProerties.ThrustPower_Boost;
+                break;
+            case ThrottleState.Normal:
+                thrustPower = m_TweakableProerties.ThrustPower_Normal;
+                break;
+            case ThrottleState.Brake:
+                thrustPower = m_TweakableProerties.ThrustPower_Brake;
+                break;
+            case ThrottleState.BrakeII:
+                thrustPower = m_TweakableProerties.ThrustPower_BrakeII;
+                break;
+            default:
+                thrustPower = 0;
+                hwmDebug.Assert(false, "Invalid Throttle: " + m_Throttle);
+                break;
+        }
+
+        // 高度对速度的影响
+        {
+            float thrustPowerFactorAffectByHeight;
+            Keyframe[] thrustAccelerationFactorsAffectByHeight = new Keyframe[3]; // Keyframe is struct, not have GC
+            thrustAccelerationFactorsAffectByHeight[0].time = m_TweakableProerties.LowHeight;
+            thrustAccelerationFactorsAffectByHeight[0].value = m_TweakableProerties.ThrustPowerFactor_LowHeight;
+            thrustAccelerationFactorsAffectByHeight[1].time = m_TweakableProerties.NormalHeight;
+            thrustAccelerationFactorsAffectByHeight[1].value = 1.0f;
+            thrustAccelerationFactorsAffectByHeight[2].time = m_TweakableProerties.HightHeight;
+            thrustAccelerationFactorsAffectByHeight[2].value = m_TweakableProerties.ThrustPowerFactor_HightHeight;
+            thrustPowerFactorAffectByHeight = hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), thrustAccelerationFactorsAffectByHeight);
+
+            thrustPower *= thrustPowerFactorAffectByHeight;
+        }
+
+        float m_ThrustAcceleration = hwmUtility.PowerToAcceleration(thrustPower, m_PropulsiveSpeed, 1.0f, delta);
+        m_ThrustAcceleration = Mathf.Min(m_ThrustAcceleration, m_TweakableProerties.MaxThrustAcceleration);
+
+        // 计算由重力产生的减速度、加速度
+        float climbAngle = -Mathf.DeltaAngle(0, m_Transform.eulerAngles.x);
+        float climbAmount = Mathf.Clamp(Mathf.Sin(climbAngle * Mathf.Deg2Rad), -1.0f, 1.0f);
+        float propulsiveGravityAcceleration = climbAmount > 0
+            ? Mathf.Lerp(0, -m_TweakableProerties.GravityDeceleration, climbAmount)
+            : Mathf.Lerp(0, m_TweakableProerties.GravityAcceleration, -climbAmount);
+
+        // 计算前向加速度
+        float propulsiveAcceleration = m_ThrustAcceleration + propulsiveGravityAcceleration;
+
+        float newPropulsiveSpeed = m_PropulsiveSpeed + propulsiveAcceleration * delta;
+        newPropulsiveSpeed = Mathf.Min(newPropulsiveSpeed, m_TweakableProerties.MaxPropulsiveSpeed);
+
+        float deltaSpeed = newPropulsiveSpeed - m_PropulsiveSpeed;
+        m_Velocity += (m_Transform.forward * deltaSpeed);
         #endregion
     }
 

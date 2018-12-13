@@ -33,7 +33,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 高速时对转向能力的影响
     /// </summary>
-    public float TurnAngularSpeedFactor_HighSpeed = 0.8f;
+    public float TurnAngularSpeedFactor_HightSpeed = 0.8f;
     /// <summary>
     /// 低空飞行高度
     /// </summary>
@@ -53,7 +53,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 高空飞行时对转向能力的影响
     /// </summary>
-    public float TurnAngularSpeedFactor_HighestHeight = 0.8f;
+    public float TurnAngularSpeedFactor_HightHeight = 0.8f;
     /// <summary>
     /// 飞机水平最大转向角速度
     /// </summary>
@@ -115,4 +115,48 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// F = m * w^2 * r
     /// </summary>
     public float MaxVerticalDragDeceleration = 100;
+    /// <summary>
+    /// 二档加速的引擎推力
+    /// </summary>
+    public float ThrustPower_BoostII = 25920.0f;
+    /// <summary>
+    /// 加速的引擎推力
+    /// </summary>
+    public float ThrustPower_Boost = 17280.0f;
+    /// <summary>
+    /// 引擎推力
+    /// </summary>
+    public float ThrustPower_Normal = 2160.0f;
+    /// <summary>
+    /// 减速引擎推力
+    /// </summary>
+    public float ThrustPower_Brake = -2160.0f;
+    /// <summary>
+    /// 二档减速的引擎推力
+    /// </summary>
+    public float ThrustPower_BrakeII = 4320.0f;
+    /// <summary>
+    /// 低空飞行时，引擎推力的乘数
+    /// </summary>
+    public float ThrustPowerFactor_LowHeight = 1.0f;
+    /// <summary>
+    /// 高空飞行时，引擎推力的乘数
+    /// </summary>
+    public float ThrustPowerFactor_HightHeight = 1.0f;
+    /// <summary>
+	/// 引擎可以提供的最大向前加速度（抵消阻力、加速度前）
+	/// </summary>
+    public float MaxThrustAcceleration = 30;
+    /// <summary>
+    /// 极限速度
+    /// </summary>
+    public float MaxPropulsiveSpeed = 150.0f;
+    /// <summary>
+    /// 飞机垂直俯冲时获得的额外加速度
+    /// </summary>
+    public float GravityAcceleration = 0;
+    /// <summary>
+    /// 飞机垂直爬升时获得的额外减速度
+    /// </summary>
+    public float GravityDeceleration = 0;
 }
