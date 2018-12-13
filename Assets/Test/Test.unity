@@ -188,10 +188,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 654574951}
   m_LocalRotation: {x: 0.18622573, y: -0, z: -0, w: 0.982507}
-  m_LocalPosition: {x: 0, y: 8.6, z: -16.8}
+  m_LocalPosition: {x: 0, y: 508.6, z: -16.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2094483348}
+  m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 21.465, y: 0, z: 0}
 --- !u!1 &819594913
@@ -315,6 +315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2094483348}
   - component: {fileID: 2094483347}
+  - component: {fileID: 2094483349}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -346,7 +347,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 902060281}
-  - {fileID: 654574955}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2094483349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2094483346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc269e41a49f0c34ca5ccd28c0fd157d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

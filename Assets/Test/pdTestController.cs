@@ -20,5 +20,11 @@ public class pdTestController : pdBaseController
             : Input.GetKey(KeyCode.E)
                 ? 1
                 : 0;
+
+        m_Throttle = Input.GetKey(KeyCode.LeftControl)
+            ? pdPlane.ThrottleState.Brake
+            : Input.GetKey(KeyCode.LeftShift)
+                ? pdPlane.ThrottleState.Boost
+                : pdPlane.ThrottleState.Normal;
     }
 }

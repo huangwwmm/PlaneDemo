@@ -86,7 +86,6 @@ public class pdPlane : MonoBehaviour
     /// <summary>
     /// 从Controller获取到的输入，向量的模小于1
     /// +X => yaw ; +Y => pitch
-    /// 手柄没法输入三个Axis，所以通过yaw和pitch推算出roll
     /// </summary>
     private Vector2 m_Axis;
     private ThrottleState m_Throttle;
@@ -318,8 +317,51 @@ public class pdPlane : MonoBehaviour
             , targetRollAcceleration
             , m_MaxRollAcceleration * delta * 2.0f); // 实际Roll操作时，Roll的角加速度
 
-        Quaternion qRollDelta = Quaternion.AngleAxis(m_RollAcceleration * delta, forward);
-        m_Transform.localRotation = qRollDelta * worldRotation;
+        Quaternion rollDelta = Quaternion.AngleAxis(m_RollAcceleration * delta, forward);
+        m_Transform.localRotation = rollDelta * worldRotation;
+        #endregion
+
+        #region 更新节流阀(速度)
+        // 飞机在径向和轴向上的阻力
+        // 本地坐标系下的速度
+		Vector3 velocity_LocalSpace = m_Transform.InverseTransformDirection(m_Velocity);
+        // -(V * V)
+        Vector3 dragForce_LocalSpace = new Vector3(-velocity_LocalSpace.x * Mathf.Abs(velocity_LocalSpace.x),
+            -velocity_LocalSpace.y * Mathf.Abs(velocity_LocalSpace.y),
+            -velocity_LocalSpace.z * Mathf.Abs(velocity_LocalSpace.z));
+        // -(V * V) * D
+        dragForce_LocalSpace.Scale(new Vector3(m_TweakableProerties.VerticalDrag
+            , m_TweakableProerties.VerticalDrag
+            , m_Throttle == ThrottleState.Brake
+                ? m_TweakableProerties.PropulsiveDrag_Brake
+                : m_Throttle == ThrottleState.BrakeII
+                    ? m_TweakableProerties.PropulsiveDrag_BrakeII
+                    : m_TweakableProerties.PropulsiveDrag));
+        Vector3 dragAcceleration_LocalSpace = dragForce_LocalSpace; // 加速度 = 阻力 / 自身质量，这里假设自身质量为1
+        // 旋转阻力加速度
+        float verticalDragAcceleration = Mathf.Sqrt(dragAcceleration_LocalSpace.x * dragAcceleration_LocalSpace.x 
+            + dragAcceleration_LocalSpace.y * dragAcceleration_LocalSpace.y);
+        if (verticalDragAcceleration > Mathf.Epsilon)
+        {
+            //限制径向阻力的最大值
+            float clampedVerticalDragAcceleration = Mathf.Min(verticalDragAcceleration, m_TweakableProerties.MaxVerticalDragDeceleration);
+            float clampVerticalDragScale = clampedVerticalDragAcceleration / verticalDragAcceleration;
+            dragAcceleration_LocalSpace.x *= clampVerticalDragScale;
+            dragAcceleration_LocalSpace.y *= clampVerticalDragScale;
+        }
+
+        // 阻力对速度的影响
+        Vector3 velocityChangeCausedByDrag = dragAcceleration_LocalSpace * delta;
+        // 阻力不能大于速率
+        velocityChangeCausedByDrag.x = Mathf.Sign(velocityChangeCausedByDrag.x)
+            * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.x), Mathf.Abs(velocity_LocalSpace.x));
+        velocityChangeCausedByDrag.y = Mathf.Sign(velocityChangeCausedByDrag.y)
+            * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.y), Mathf.Abs(velocity_LocalSpace.y));
+        velocityChangeCausedByDrag.z = Mathf.Sign(velocityChangeCausedByDrag.z)
+            * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.z), Mathf.Abs(velocity_LocalSpace.z));
+        velocityChangeCausedByDrag = m_Transform.TransformDirection(velocityChangeCausedByDrag);
+
+        m_Velocity += velocityChangeCausedByDrag;
         #endregion
     }
 
@@ -330,15 +372,15 @@ public class pdPlane : MonoBehaviour
 	/// <returns></returns>
 	public Vector2 AxisToAngularVelocity(Vector2 axis)
     {
-        Vector2 angularVelocity = axis * m_MaxTurnAngularSpeed;
+        Vector2 angularVelocity = new Vector2(axis.y * m_MaxTurnAngularSpeed
+            , axis.x * m_MaxTurnAngularSpeed);
 
         if (m_IsHighGTurn)
         {
-            angularVelocity.x *= m_TweakableProerties.HighGTurnAxisXMultiplyValue;
+            angularVelocity.y *= m_TweakableProerties.HighGTurnAxisXMultiplyValue;
         }
 
-        // UNDONE 为什么要交换x,y
-        return new Vector2(angularVelocity.y, angularVelocity.x);
+        return angularVelocity;
     }
 
     /// <summary>

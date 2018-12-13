@@ -90,4 +90,29 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// Roll轴旋转角度恢复到0的强度
     /// </summary>
     public float RollToZeroStrength = 1.2f;
+    /// <summary>
+    /// 飞机在左右和上下方向上的阻尼大小，注意计算时会忽略质量直接用这个值和速度计算出阻力的加速度。
+    /// 所以质量越大的飞机，这里填的数值应该越小，这样模拟出的惯性就越大。
+    /// 阻力的运算方式是：阻力 = 速度 * 速度 * 阻力系数
+    /// </summary>
+    public float VerticalDrag = 12.0f;
+    /// <summary>
+    /// 飞机在前后方向上的阻力系数
+    /// </summary>
+    public float PropulsiveDrag = 0.001f;
+    /// <summary>
+    /// 减速时，飞机在前后方向上的阻力系数
+    /// </summary>
+    public float PropulsiveDrag_Brake = 0.01f;
+    /// <summary>
+    /// 减速时，飞机在前后方向上的阻力系数
+    /// </summary>
+    public float PropulsiveDrag_BrakeII = 0.05f;
+    /// <summary>
+    /// 允许组尼产生的最大加速度，注意这个值主要用于模拟转过小的圈时向心加速度不足导致机头方向和飞机朝向不同的情况。
+    /// 一旦发生这种情况，没能通过向心加速度偏转的动量就会受组尼影响而浪费掉。所以Drag越高的飞机转向时损失的能力也相对越小。
+    /// F = m * (v^2 / r)
+    /// F = m * w^2 * r
+    /// </summary>
+    public float MaxVerticalDragDeceleration = 100;
 }
