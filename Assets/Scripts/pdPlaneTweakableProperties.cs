@@ -57,7 +57,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 飞机水平最大转向角速度
     /// </summary>
-    public float MaxTurnAngularSpeed = 45.0f;
+    public float MaxTurnAngularVelocity = 45.0f;
     /// <summary>
 	/// 受损状态下的转向角速度缩放
 	/// </summary>

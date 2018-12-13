@@ -54,9 +54,9 @@ public class pdPlane : MonoBehaviour
     /// </summary>
     private float m_StallAmount = 0;
     /// <summary>
-    /// 最大转向速度
+    /// 最大转向角速度
     /// </summary>
-	private float m_MaxTurnAngularSpeed = 0;
+	private float m_MaxTurnAngularVelocity = 0;
     /// <summary>
     /// 最大转向加速度
     /// </summary>
@@ -165,7 +165,7 @@ public class pdPlane : MonoBehaviour
         // 飞行高度对转向能力的影响
         float angularSpeedFactorAffectByHeight = hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), angularSpeedFactorsAffectByHeight);
 
-        m_MaxTurnAngularSpeed = m_TweakableProerties.MaxTurnAngularSpeed
+        m_MaxTurnAngularVelocity = m_TweakableProerties.MaxTurnAngularVelocity
             // 推进速度
             * angularSpeedFactorAffectByPropulsiveSpeed
             // 飞行高度
@@ -178,7 +178,7 @@ public class pdPlane : MonoBehaviour
             // 挂载组
             * (1.0f - m_RotateReductionRatioByPayload);
 
-        m_MaxTurnAngularAcceleration = m_MaxTurnAngularSpeed * m_MaxRollAcceleration * MAX_TURN_ANGULAR_ACCELERATION_MULTIPLIER;
+        m_MaxTurnAngularAcceleration = m_MaxTurnAngularVelocity * m_MaxRollAcceleration * MAX_TURN_ANGULAR_ACCELERATION_MULTIPLIER;
         #endregion
 
         #region 获取杆量输入
@@ -436,8 +436,8 @@ public class pdPlane : MonoBehaviour
 	/// <returns></returns>
 	public Vector2 AxisToAngularVelocity(Vector2 axis)
     {
-        Vector2 angularVelocity = new Vector2(axis.y * m_MaxTurnAngularSpeed
-            , axis.x * m_MaxTurnAngularSpeed);
+        Vector2 angularVelocity = new Vector2(axis.y * m_MaxTurnAngularVelocity
+            , axis.x * m_MaxTurnAngularVelocity);
 
         if (m_IsHighGTurn)
         {
@@ -452,7 +452,6 @@ public class pdPlane : MonoBehaviour
 	/// </summary>
 	private bool CanHighGTrunForAxis(Vector2 axis)
     {
-        // UNDONE 没看懂，但是感觉有问题。 m_MaxTurnAngularSpeed的单位是度/秒，m_AngularVelocity.magnitude是杆量大小，这两个单位不同，怎么相减
         // 0 => 0度; 1 => 90度; 2 => 180度
         float angularValue = Mathf.Abs(Mathf.Atan2(axis.y, axis.x) * hwmUtility.IVNERT_PI * 2);
         // 使angularValue始终为0到1
@@ -461,7 +460,7 @@ public class pdPlane : MonoBehaviour
         // 算这个magnitudeScale是因为，我假设椭圆上的点到圆心的半径与角度的关系为linear的。所以根据rotateVector算一个角度，再根据角度算magnitudeScale
         float magnitudeScale = 1 - angularValue;
 
-        float differentAngular = m_MaxTurnAngularSpeed * magnitudeScale - m_AngularVelocity.magnitude;
+        float differentAngular = m_MaxTurnAngularVelocity * magnitudeScale - m_AngularVelocity.magnitude;
         // 1.5 就是一个估计值
         return differentAngular < 1.5f;
     }
