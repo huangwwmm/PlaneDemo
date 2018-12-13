@@ -74,6 +74,7 @@ public class pdPlane : MonoBehaviour
     private float m_HighGTrunDuration = 0;
     /// <summary>
     /// 相机上方向
+    /// UNDONE 啥啥啥???
     /// </summary>
     private Vector3 m_TargetCameraUp = Vector3.up;
     /// <summary>
@@ -218,107 +219,120 @@ public class pdPlane : MonoBehaviour
         #endregion
 
         #region 更新飞机旋转
-        // 持续高G转弯，进入CD
-        if (m_HighGTrunDuration > m_TweakableProerties.HighGTurnDuration)
+        // 高G转弯
         {
-            m_HighGTurnCD = m_TweakableProerties.HighGTurnCD;
-        }
+            // 判断高G转弯
+            m_IsHighGTurn = (m_Throttle == ThrottleState.Brake || m_Throttle == ThrottleState.BrakeII)
+                // 确保飞机在高速中做不出高G转弯(例如俯冲)
+                && m_PropulsiveSpeed < (m_TweakableProerties.HightSpeed + m_TweakableProerties.NormalSpeed) * 0.5f
+                && m_HighGTurnCD < 0
+                && CanHighGTrunForAxis(m_Axis);
 
-        // 判断高G转弯
-        m_IsHighGTurn = (m_Throttle == ThrottleState.Brake || m_Throttle == ThrottleState.BrakeII)
-            // 确保飞机在高速中做不出高G转弯(例如俯冲)
-            && m_PropulsiveSpeed < (m_TweakableProerties.HightSpeed + m_TweakableProerties.NormalSpeed) * 0.5f
-            && m_HighGTurnCD < 0
-            && CanHighGTrunForAxis(m_Axis);
+            if (m_IsHighGTurn)
+            {
+                m_HighGTrunDuration += delta;
+
+                // 持续高G转弯，进入CD
+                if (m_HighGTrunDuration > m_TweakableProerties.HighGTurnDuration)
+                {
+                    m_HighGTurnCD = m_TweakableProerties.HighGTurnCD;
+                }
+            }
+            else
+            {
+                m_HighGTurnCD = Mathf.Max(0, m_HighGTurnCD - delta);
+                m_HighGTrunDuration = 0;
+            }
+        }
 
         // 更新角速度
         Vector2 angularVelocity = AxisToAngularVelocity(m_Axis);
         m_AngularVelocity = Vector2.MoveTowards(m_AngularVelocity, angularVelocity, delta * m_MaxAngularAcceleration);
+        // 角度变化
+        Quaternion deltaRotation = Quaternion.Euler(m_AngularVelocity * delta);
+        // 计算旋转后的角度(yaw和pitch)
+        Quaternion newRotation = m_Transform.localRotation * deltaRotation;
+        Vector3 newForward = newRotation * Vector3.forward;
 
-        // UNDONE 角度计算这里没太看懂，记得重新算一遍
-        Quaternion qOldWorld = m_Transform.localRotation;
-        Vector2 eulerDeltaRotation = m_AngularVelocity * delta;
-        Quaternion qDeltaRotation = Quaternion.Euler(eulerDeltaRotation);
-        float degreeDeltaRotation = Quaternion.Angle(qDeltaRotation, Quaternion.identity);
-        float fTurnSpeed = degreeDeltaRotation * invertDelta;
-        // 转向导致的速度损失
-        float decelerationCausedByTurning = (fTurnSpeed * 0.01111f) // 0.01111f equal 1 / 90.0f
-            * m_PropulsiveSpeed
-            * m_TweakableProerties.DecelerationCausedByTurningCoefficient;
-
-        m_HighGTurnCD -= delta;
-        if (m_IsHighGTurn)
+        // 更新Roll轴 UNDONE 这里没看懂
+        Quaternion rollDelta;
         {
-            // 高G转弯导致减速
-            decelerationCausedByTurning *= m_TweakableProerties.DecelerationCausedByHighGTurn;
-            m_HighGTrunDuration += delta;
-        }
-        else
-        {
-            m_HighGTrunDuration = 0;
-        }
-
-        decelerationCausedByTurning = Mathf.Clamp(decelerationCausedByTurning, 0, m_TweakableProerties.MaxDecelerationCausedByTurning);
-        // 减速
-        m_Velocity -= m_Transform.forward
-            * Mathf.Clamp(decelerationCausedByTurning, 0, m_TweakableProerties.MaxDecelerationCausedByTurning)
-            * delta;
-
-        Quaternion worldRotation = qOldWorld * qDeltaRotation;
-        // 保证CameraUp仅在m_Transform.forward轴上有旋转
-        Vector3 forward = worldRotation * Vector3.forward;
-
-        // 更新Roll轴
-        float inputRoll = -m_Controller.GetRoll();
-        float targetRollAcceleration = 0;
-        if (Mathf.Abs(inputRoll) < Mathf.Epsilon)
-        {
-            Vector3 vLeft = Vector3.Cross(forward, Vector3.up).normalized;
-            m_TargetCameraUp = Vector3.Cross(vLeft, forward).normalized;
-
-            Vector3 vMyUp = m_Transform.up;
-            float fDeltaCos = Vector3.Dot(m_TargetCameraUp, vMyUp);
-            fDeltaCos = Mathf.Sign(fDeltaCos) * Mathf.Clamp01(Mathf.Abs(fDeltaCos));
-            if (fDeltaCos < 0.999f)
+            float inputRoll = -m_Controller.GetRoll();
+            float targetRollAcceleration = 0;
+            if (Mathf.Abs(inputRoll) < Mathf.Epsilon)
             {
-                Vector3 vRotAxis = Vector3.Cross(m_TargetCameraUp, vMyUp);
-                float fDeltaSin = vRotAxis.magnitude;
-                vRotAxis = fDeltaSin < Mathf.Epsilon
-                    ? forward // 当m_CameraTargetUp = -m_CameraUp时，默认沿着逆时针旋转
-                    : vRotAxis / fDeltaSin;
-                float fDeltaDegree = Mathf.Acos(fDeltaCos) * Mathf.Rad2Deg;
+                Vector3 vLeft = Vector3.Cross(newForward, Vector3.up).normalized;
+                m_TargetCameraUp = Vector3.Cross(vLeft, newForward).normalized;
 
-                // 机头接近与地面垂直时，减小自动校正的程度（否则会造成较大的偏航）
-                float fLerpAmountMul = 1.0f - Mathf.Clamp01(Mathf.Abs(Vector3.Dot(forward, Vector3.up)));
-                // 用户在垂直方向上的输入分量较大（做Loop）时，减弱恢复速度。
-                fLerpAmountMul *= 1.0f - Mathf.Clamp01(Mathf.Abs(m_Axis.y));
+                Vector3 vMyUp = m_Transform.up;
+                float fDeltaCos = Vector3.Dot(m_TargetCameraUp, vMyUp);
+                fDeltaCos = Mathf.Sign(fDeltaCos) * Mathf.Clamp01(Mathf.Abs(fDeltaCos));
+                if (fDeltaCos < 0.999f)
+                {
+                    Vector3 vRotAxis = Vector3.Cross(m_TargetCameraUp, vMyUp);
+                    float fDeltaSin = vRotAxis.magnitude;
+                    vRotAxis = fDeltaSin < Mathf.Epsilon
+                        ? newForward // 当m_CameraTargetUp = -m_CameraUp时，默认沿着逆时针旋转
+                        : vRotAxis / fDeltaSin;
+                    float fDeltaDegree = Mathf.Acos(fDeltaCos) * Mathf.Rad2Deg;
 
-                // fDeltaDegree越大需要的旋转速度越高
-                float fLerpResult = Mathf.Lerp(fDeltaDegree, 0, fLerpAmountMul * m_TweakableProerties.RollToZeroStrength * delta);
-                targetRollAcceleration = (fLerpResult - fDeltaDegree) * invertDelta;
-                targetRollAcceleration = Vector3.Dot(vRotAxis, forward) > 0
-                    ? targetRollAcceleration
-                    : -targetRollAcceleration;
+                    // 机头接近与地面垂直时，减小自动校正的程度（否则会造成较大的偏航）
+                    float fLerpAmountMul = 1.0f - Mathf.Clamp01(Mathf.Abs(Vector3.Dot(newForward, Vector3.up)));
+                    // 用户在垂直方向上的输入分量较大（做Loop）时，减弱恢复速度。
+                    fLerpAmountMul *= 1.0f - Mathf.Clamp01(Mathf.Abs(m_Axis.y));
 
-                targetRollAcceleration = hwmUtility.ClampAbs(targetRollAcceleration, m_MaxRollAngularAcceleration);
+                    // fDeltaDegree越大需要的旋转速度越高
+                    float fLerpResult = Mathf.Lerp(fDeltaDegree, 0, fLerpAmountMul * m_TweakableProerties.RollToZeroStrength * delta);
+                    targetRollAcceleration = (fLerpResult - fDeltaDegree) * invertDelta;
+                    targetRollAcceleration = Vector3.Dot(vRotAxis, newForward) > 0
+                        ? targetRollAcceleration
+                        : -targetRollAcceleration;
+
+                    targetRollAcceleration = hwmUtility.ClampAbs(targetRollAcceleration, m_MaxRollAngularAcceleration);
+                }
             }
+            else
+            {
+                targetRollAcceleration = Mathf.Clamp(inputRoll, -1.0f, 1.0f) * m_MaxRollAngularAcceleration;
+            }
+
+            targetRollAcceleration *= Mathf.Clamp01(1.0f - m_StallAmount * 10.0f);
+
+            m_RollAcceleration = Mathf.MoveTowards(m_RollAcceleration
+                , targetRollAcceleration
+                , m_MaxRollAngularAcceleration * delta * 2.0f); // 实际Roll操作时，Roll的角加速度
+
+            rollDelta = Quaternion.AngleAxis(m_RollAcceleration * delta, newForward);
         }
-        else
-        {
-            targetRollAcceleration = Mathf.Clamp(inputRoll, -1.0f, 1.0f) * m_MaxRollAngularAcceleration;
-        }
 
-        targetRollAcceleration *= Mathf.Clamp01(1.0f - m_StallAmount * 10.0f);
-
-        m_RollAcceleration = Mathf.MoveTowards(m_RollAcceleration
-            , targetRollAcceleration
-            , m_MaxRollAngularAcceleration * delta * 2.0f); // 实际Roll操作时，Roll的角加速度
-
-        Quaternion rollDelta = Quaternion.AngleAxis(m_RollAcceleration * delta, forward);
-        m_Transform.localRotation = rollDelta * worldRotation;
+        m_Transform.localRotation = rollDelta * newRotation;
         #endregion
 
         #region 更新节流阀(速度)
+        // 转向导致的减速
+        {
+            float degreeDeltaRotation = Quaternion.Angle(deltaRotation, Quaternion.identity);
+            float turnSpeed = degreeDeltaRotation * invertDelta;
+
+            // 转向导致的速度损失
+            float decelerationCausedByTurning = (turnSpeed * 0.01111f) // 0.01111f equal 1 / 90.0f
+                * m_PropulsiveSpeed
+                * m_TweakableProerties.DecelerationCausedByTurningCoefficient;
+
+            // 高G转弯导致减速
+            if (m_IsHighGTurn)
+            {
+                decelerationCausedByTurning *= m_TweakableProerties.DecelerationCausedByHighGTurn;
+            }
+
+            decelerationCausedByTurning = Mathf.Clamp(decelerationCausedByTurning, 0, m_TweakableProerties.MaxDecelerationCausedByTurning);
+
+            // 减速
+            m_Velocity -= m_Transform.forward
+                * Mathf.Clamp(decelerationCausedByTurning, 0, m_TweakableProerties.MaxDecelerationCausedByTurning)
+                * delta;
+        }
+
         // 飞机在径向和轴向上的阻力
         {
             // 本地坐标系下的速度
