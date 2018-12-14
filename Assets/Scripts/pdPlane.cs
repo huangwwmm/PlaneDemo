@@ -186,7 +186,7 @@ public class pdPlane : MonoBehaviour
             keyframe3Cache[2].time = m_TweakableProerties.HightSpeed;
             keyframe3Cache[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightSpeed;
             // 速度对转向能力的影响 TODO 如果效果不好，再考虑特殊处理
-            angularFactorsAffect *= hwmUtility.Evaluate(m_PropulsiveSpeed, keyframe3Cache);
+            angularFactorsAffect *= hwmMath.Evaluate(m_PropulsiveSpeed, keyframe3Cache);
         }
 
         // 高度对旋转能力的影响
@@ -198,7 +198,7 @@ public class pdPlane : MonoBehaviour
             keyframe3Cache[2].time = m_TweakableProerties.HightHeight;
             keyframe3Cache[2].value = m_TweakableProerties.TurnAngularSpeedFactor_HightHeight;
             // 飞行高度对转向能力的影响
-            angularFactorsAffect *= hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), keyframe3Cache);
+            angularFactorsAffect *= hwmMath.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), keyframe3Cache);
         }
 
         // 机翼受伤时转向的影响 UNDONE 还没做机翼
@@ -301,7 +301,7 @@ public class pdPlane : MonoBehaviour
                 , Mathf.Max(10.0f
                     , m_MaxRollAcceleration * smooth));
 
-            float roll = hwmUtility.MoveTowards(currentRoll
+            float roll = hwmMath.MoveTowards(currentRoll
                 , targetRoll
                 , ref m_FakeCoordinateRollVelocity
                 , fakeCoordinateSmoothedMaxRollVelocity
@@ -352,7 +352,7 @@ public class pdPlane : MonoBehaviour
             // 本地坐标系下的速度
             Vector3 velocity_LocalSpace = m_Transform.InverseTransformDirection(m_Velocity);
             // 空气阻力
-            Vector3 dragForce_LocalSpace = hwmUtility.CalculateDrag(velocity_LocalSpace
+            Vector3 dragForce_LocalSpace = hwmMath.CalculateDrag(velocity_LocalSpace
                 , new Vector3(m_TweakableProerties.VerticalDragCoefficient
                     , m_TweakableProerties.VerticalDragCoefficient
                     , m_Throttle == ThrottleState.Brake
@@ -422,10 +422,10 @@ public class pdPlane : MonoBehaviour
                 keyframe3Cache[2].time = m_TweakableProerties.HightHeight;
                 keyframe3Cache[2].value = m_TweakableProerties.ThrustPowerFactor_HightHeight;
 
-                thrustPower *= hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), keyframe3Cache);
+                thrustPower *= hwmMath.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), keyframe3Cache);
             }
 
-            float thrustAcceleration = hwmUtility.PowerToAcceleration(thrustPower, m_PropulsiveSpeed, 1.0f, deltaTime);
+            float thrustAcceleration = hwmMath.PowerToAcceleration(thrustPower, m_PropulsiveSpeed, 1.0f, deltaTime);
             thrustAcceleration = Mathf.Min(thrustAcceleration, m_TweakableProerties.MaxThrustAcceleration);
 
             // 计算由重力产生的减速度、加速度
@@ -512,7 +512,7 @@ public class pdPlane : MonoBehaviour
 	private bool CanHighGTrunForAxis(Vector2 axis)
     {
         // 0 => 0度; 1 => 90度; 2 => 180度
-        float angularValue = Mathf.Abs(Mathf.Atan2(axis.y, axis.x) * hwmUtility.IVNERT_PI * 2);
+        float angularValue = Mathf.Abs(Mathf.Atan2(axis.y, axis.x) * hwmMath.IVNERT_PI * 2);
         // 使angularValue始终为0到1
         angularValue = angularValue > 1 ? 2 - angularValue : angularValue;
 

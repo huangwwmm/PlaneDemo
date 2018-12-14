@@ -122,9 +122,9 @@ public class pdCamera : MonoBehaviour
             // 根据飞机的G力偏移相机, 给玩家传达飞行员承受的加速度
             Vector3 planeAcceleration_LocalSpace = m_MyPlane.GetAcceleration_LocalSpace();
 
-            Vector3 offsetByGForce = m_MyPlaneTransform.TransformDirection(new Vector3(hwmUtility.ClampAbs(planeAcceleration_LocalSpace.x * m_Properties.TPSCameraOffsetMultiplyByGForce.x, m_Properties.TPSCameraOffsetMaxByGForce.x)
-                , hwmUtility.ClampAbs(planeAcceleration_LocalSpace.y * m_Properties.TPSCameraOffsetMultiplyByGForce.y, m_Properties.TPSCameraOffsetMaxByGForce.y)
-                , hwmUtility.ClampAbs(-planeAcceleration_LocalSpace.z * m_Properties.TPSCameraOffsetMultiplyByGForce.z, m_Properties.TPSCameraOffsetMaxByGForce.z)));
+            Vector3 offsetByGForce = m_MyPlaneTransform.TransformDirection(new Vector3(hwmMath.ClampAbs(planeAcceleration_LocalSpace.x * m_Properties.TPSCameraOffsetMultiplyByGForce.x, m_Properties.TPSCameraOffsetMaxByGForce.x)
+                , hwmMath.ClampAbs(planeAcceleration_LocalSpace.y * m_Properties.TPSCameraOffsetMultiplyByGForce.y, m_Properties.TPSCameraOffsetMaxByGForce.y)
+                , hwmMath.ClampAbs(-planeAcceleration_LocalSpace.z * m_Properties.TPSCameraOffsetMultiplyByGForce.z, m_Properties.TPSCameraOffsetMaxByGForce.z)));
 
             // TODO 根据负载程度抖动相机? 电影和动画中经常这么做
 
