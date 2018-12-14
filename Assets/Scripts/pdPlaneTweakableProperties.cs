@@ -5,7 +5,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 最大滚转角速度
     /// </summary>
-    public float MaxRollAngularAcceleration = 270;
+    public float MaxRollAcceleration = 270;
     /// <summary>
     /// 失速时对转向能力的影响
     /// </summary>

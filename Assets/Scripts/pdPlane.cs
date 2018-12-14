@@ -4,6 +4,7 @@ public class pdPlane : MonoBehaviour
 {
     private pdBaseController m_Controller;
 
+
     /// <summary>
     /// 当前飞机的真实速度
     /// </summary>
@@ -16,6 +17,14 @@ public class pdPlane : MonoBehaviour
     /// 加速度
     /// </summary>
     private Vector3 m_Acceleration;
+    /// <summary>
+    /// equal <see cref="m_Velocity"/> magnitude
+    /// </summary>
+    private float m_Speed;
+    /// <summary>
+    /// 推进(forward方向)速度
+    /// </summary>
+    private float m_PropulsiveSpeed;
 
     /// <summary>
     /// 角速度
@@ -29,19 +38,24 @@ public class pdPlane : MonoBehaviour
     /// 角加速度
     /// </summary>
     private Vector3 m_AngularAcceleration;
+    /// <summary>
+    /// 最大转向加速度
+    /// </summary>
+    private float m_MaxAngularAcceleration = 0;
 
     /// <summary>
-    /// equal <see cref="m_Velocity"/> magnitude
+    /// Roll轴的角加速度
     /// </summary>
-    private float m_Speed;
-    /// <summary>
-    /// 推进(forward方向)速度
-    /// </summary>
-    private float m_PropulsiveSpeed;
+    private float m_RollAcceleration = 0;
     /// <summary>
     /// Roll轴最大角加速度
     /// </summary>
-    private float m_MaxRollAngularAcceleration = 0;
+    private float m_MaxRollAcceleration = 0;
+    /// <summary>
+    /// 用于模拟Coordinate Turn的飞机Roll旋转
+    /// </summary>
+    private float m_FakeCoordinateRollVelocity = 0;
+
     /// <summary>
     /// 范围0 ~ 1
     /// 大于0时，飞机失速
@@ -53,10 +67,7 @@ public class pdPlane : MonoBehaviour
     /// <see cref="m_StallAmount"/>
     /// </summary>
     private StallState m_StallState = StallState.None;
-    /// <summary>
-    /// 最大转向加速度
-    /// </summary>
-    private float m_MaxAngularAcceleration = 0;
+   
     /// <summary>
     /// 是否是高G转弯
     /// <see cref="http://acecombat.wikia.com/wiki/High-G_Turn"/>
@@ -70,26 +81,17 @@ public class pdPlane : MonoBehaviour
     /// 高G转弯的持续时间
     /// </summary>
     private float m_HighGTrunDuration = 0;
+
     /// <summary>
-    /// 相机上方向
-    /// UNDONE 啥啥啥???
+    /// 节流阀状态
     /// </summary>
-    private Vector3 m_TargetCameraUp = Vector3.up;
-    /// <summary>
-    /// Roll轴的角加速度
-    /// </summary>
-    private float m_RollAcceleration = 0;
-    /// <summary>
-    /// 模拟Coordinate Turn的飞机旋转
-    /// </summary>
-    private float m_FakeCoordinateRollVelocity = 0;
+    private ThrottleState m_Throttle;
 
     /// <summary>
     /// 从Controller获取到的输入，向量的模小于1
     /// +X => yaw ; +Y => pitch
     /// </summary>
     private Vector2 m_Axis;
-    private ThrottleState m_Throttle;
 
     /// <summary>
     /// pdPlane节点
@@ -156,7 +158,7 @@ public class pdPlane : MonoBehaviour
         angularFactorsAffect *= (1.0f - Mathf.Clamp01(m_StallAmount * 2.0f)) * m_TweakableProerties.AngularSpeedReduceByStallNormalized;
 
         // 引擎受损时转向的影响 UNDONE 还没做飞机引擎
-        angularFactorsAffect *= false ? m_TweakableProerties.RollAngularSpeedScaleWhenDamaged : 1;
+        //angularFactorsAffect *= false ? m_TweakableProerties.RollAngularSpeedScaleWhenDamaged : 1;
 
         // 速度对转向能力的影响
         Keyframe[] keyframe3Cache = new Keyframe[3]; // Keyframe is struct, not have GC
@@ -184,9 +186,9 @@ public class pdPlane : MonoBehaviour
         }
 
         // 机翼受伤时转向的影响 UNDONE 还没做机翼
-        angularFactorsAffect *= false ? m_TweakableProerties.TurnAngularSpeedScaleWhenDamaged : 1;
+        //angularFactorsAffect *= false ? m_TweakableProerties.TurnAngularSpeedScaleWhenDamaged : 1;
 
-        m_MaxRollAngularAcceleration = m_TweakableProerties.MaxRollAngularAcceleration * angularFactorsAffect;
+        m_MaxRollAcceleration = m_TweakableProerties.MaxRollAcceleration * angularFactorsAffect;
         m_MaxAngularAcceleration = m_TweakableProerties.MaxAngularAcceleration * angularFactorsAffect;
         #endregion
 
@@ -272,22 +274,22 @@ public class pdPlane : MonoBehaviour
             float rollAxis = -m_Controller.GetRoll();
             float targetRoll = Mathf.Abs(rollAxis) < Mathf.Epsilon
                 ? Mathf.Clamp(Mathf.Asin(-m_Axis.x) * Mathf.Rad2Deg, -90, 90)
-                : currentRoll + rollAxis * m_MaxRollAngularAcceleration;
+                : currentRoll + rollAxis * m_MaxRollAcceleration;
 
             // 和fTargetRollAngle距离小于45度时开始减速，越接近目标速度越小，这里的魔法数字是试出来的
             float distance = Mathf.Abs(currentRoll - targetRoll);
             float smooth = Mathf.Clamp01(distance / 60.0f);
             smooth = Mathf.Pow(smooth, 2.5f);
             // 限制最低转速为10度/秒
-            float fakeCoordinateSmoothedMaxRollVelocity = Mathf.Min(m_MaxRollAngularAcceleration
-                , Mathf.Max(10.0f 
-                    , m_MaxRollAngularAcceleration * smooth));
+            float fakeCoordinateSmoothedMaxRollVelocity = Mathf.Min(m_MaxRollAcceleration
+                , Mathf.Max(10.0f
+                    , m_MaxRollAcceleration * smooth));
 
             float roll = hwmUtility.MoveTowards(currentRoll
                 , targetRoll
                 , ref m_FakeCoordinateRollVelocity
                 , fakeCoordinateSmoothedMaxRollVelocity
-                , m_MaxRollAngularAcceleration * 5.0f // 用于表现Coordinate Turn的Roll的角加速度
+                , m_MaxRollAcceleration * 5.0f // 用于表现Coordinate Turn的Roll的角加速度
                 , delta);
 
             m_RollAcceleration = roll - currentRollEulerAngles.z;
@@ -343,7 +345,7 @@ public class pdPlane : MonoBehaviour
                             ? m_TweakableProerties.PropulsiveDragCoefficient_BrakeII
                             : m_TweakableProerties.PropulsiveDragCoefficient));
             // a = F / m (加速度 = 阻力 / 自身质量), 为简化计算, 这里假设自身质量为1
-            Vector3 dragAcceleration_LocalSpace = dragForce_LocalSpace; 
+            Vector3 dragAcceleration_LocalSpace = dragForce_LocalSpace;
             // 旋转阻力加速度
             float verticalDragAcceleration = Mathf.Sqrt(dragAcceleration_LocalSpace.x * dragAcceleration_LocalSpace.x
                 + dragAcceleration_LocalSpace.y * dragAcceleration_LocalSpace.y);
