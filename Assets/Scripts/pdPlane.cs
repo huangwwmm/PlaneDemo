@@ -466,9 +466,12 @@ public class pdPlane : MonoBehaviour
         // 根据飞行姿态计算Roll
         #endregion
 
-        // 应用旋转
+        // 更新旋转
         m_Transform.localRotation = newRotation;
         m_PlaneRootTransform.localEulerAngles = newPlaneRootEulerAngles;
+
+        // 更新位置
+        m_Transform.localPosition = m_Velocity * delta + m_Transform.localPosition;
     }
 
     /// <summary>
