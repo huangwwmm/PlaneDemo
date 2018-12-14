@@ -2,6 +2,8 @@
 
 public class pdTestController : pdBaseController
 {
+    public pdCamera m_Camera;
+
     protected void FixedUpdate()
     {
         m_Axis.x = Input.GetKey(KeyCode.A)
@@ -26,5 +28,15 @@ public class pdTestController : pdBaseController
             : Input.GetKey(KeyCode.LeftShift)
                 ? pdPlane.ThrottleState.Boost
                 : pdPlane.ThrottleState.Normal;
+    }
+
+    protected override void HandleSetControllerPlane()
+    {
+        m_Camera.SetMyPlane(m_Plane);
+    }
+
+    protected override void HandleUnControllerPlane()
+    {
+        m_Camera.SetMyPlane(null);
     }
 }

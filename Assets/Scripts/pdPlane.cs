@@ -14,9 +14,9 @@ public class pdPlane : MonoBehaviour
     /// </summary>
     private Vector3 m_LastVelocity;
     /// <summary>
-    /// 加速度
+    /// 本地空间的加速度
     /// </summary>
-    private Vector3 m_Acceleration;
+    private Vector3 m_Acceleration_LocalSpace;
     /// <summary>
     /// equal <see cref="m_Velocity"/> magnitude
     /// </summary>
@@ -67,7 +67,7 @@ public class pdPlane : MonoBehaviour
     /// <see cref="m_StallAmount"/>
     /// </summary>
     private StallState m_StallState = StallState.None;
-   
+
     /// <summary>
     /// 是否是高G转弯
     /// <see cref="http://acecombat.wikia.com/wiki/High-G_Turn"/>
@@ -117,11 +117,26 @@ public class pdPlane : MonoBehaviour
         return false;
     }
 
+    public Vector3 GetAcceleration_LocalSpace()
+    {
+        return m_Acceleration_LocalSpace;
+    }
+
     protected void Awake()
     {
         m_Transform = transform;
         m_PlaneRootTransform = transform.Find("PlaneRoot");
         m_Controller = gameObject.GetComponent<pdBaseController>();
+        m_Controller.SetControllerPlane(this);
+    }
+
+    protected void OnDestroy()
+    {
+        m_Controller.UnControllerPlane();
+        m_Controller = null;
+
+        m_PlaneRootTransform = null;
+        m_Transform = null;
     }
 
     protected void FixedUpdate()
@@ -131,12 +146,13 @@ public class pdPlane : MonoBehaviour
         DoUpdateMovement(delta, invertDelta);
     }
 
-    private void DoUpdateMovement(float delta, float invertDelta)
+    private void DoUpdateMovement(float deltaTime, float invertDeltaTime)
     {
-        m_Acceleration = (m_Velocity - m_LastVelocity) * invertDelta;
+        Vector3 acceleration_WorldSpace = (m_Velocity - m_LastVelocity) * invertDeltaTime;
+        m_Acceleration_LocalSpace = m_Transform.InverseTransformDirection(acceleration_WorldSpace);
         m_LastVelocity = m_Velocity;
 
-        m_AngularAcceleration = (m_AngularVelocity - m_LastAngularVelocity) * invertDelta;
+        m_AngularAcceleration = (m_AngularVelocity - m_LastAngularVelocity) * invertDeltaTime;
         m_LastAngularVelocity = m_AngularVelocity;
 
         m_Speed = m_Velocity.magnitude;
@@ -243,7 +259,7 @@ public class pdPlane : MonoBehaviour
 
             if (m_IsHighGTurn)
             {
-                m_HighGTrunDuration += delta;
+                m_HighGTrunDuration += deltaTime;
 
                 // 持续高G转弯，进入CD
                 if (m_HighGTrunDuration > m_TweakableProerties.HighGTurnDuration)
@@ -253,16 +269,16 @@ public class pdPlane : MonoBehaviour
             }
             else
             {
-                m_HighGTurnCD = Mathf.Max(0, m_HighGTurnCD - delta);
+                m_HighGTurnCD = Mathf.Max(0, m_HighGTurnCD - deltaTime);
                 m_HighGTrunDuration = 0;
             }
         }
 
         // Yaw轴和Pitch轴
         Vector2 angularVelocity = AxisToAngularVelocity(m_Axis);
-        m_AngularVelocity = Vector2.MoveTowards(m_AngularVelocity, angularVelocity, delta * m_MaxAngularAcceleration);
+        m_AngularVelocity = Vector2.MoveTowards(m_AngularVelocity, angularVelocity, deltaTime * m_MaxAngularAcceleration);
         // 角度变化
-        Quaternion deltaYawPitchRotation = Quaternion.Euler(m_AngularVelocity * delta);
+        Quaternion deltaYawPitchRotation = Quaternion.Euler(m_AngularVelocity * deltaTime);
         // 绕Yaw轴和Pitch轴旋转后的角度
         Quaternion newRotation = m_Transform.localRotation * deltaYawPitchRotation;
 
@@ -289,15 +305,15 @@ public class pdPlane : MonoBehaviour
                 , targetRoll
                 , ref m_FakeCoordinateRollVelocity
                 , fakeCoordinateSmoothedMaxRollVelocity
-                , m_MaxRollAcceleration * 5.0f // 用于表现Coordinate Turn的Roll的角加速度
-                , delta);
+                , m_MaxRollAcceleration * 5.0f // 试出来的，这样比较好看
+                , deltaTime);
 
             m_RollAcceleration = roll - currentRollEulerAngles.z;
             if (Mathf.Abs(m_RollAcceleration) >= 350)
             {
                 m_RollAcceleration += Mathf.Sign(m_RollAcceleration) * -1 * 360f;
             }
-            m_RollAcceleration /= delta;
+            m_RollAcceleration /= deltaTime;
 
             newPlaneRootEulerAngles = new Vector3(currentRollEulerAngles.x
                 , currentRollEulerAngles.y
@@ -309,7 +325,7 @@ public class pdPlane : MonoBehaviour
         // 转向导致的减速
         {
             float degreeDeltaRotation = Quaternion.Angle(deltaYawPitchRotation, Quaternion.identity);
-            float turnSpeed = degreeDeltaRotation * invertDelta;
+            float turnSpeed = degreeDeltaRotation * invertDeltaTime;
 
             // 转向导致的速度损失
             float decelerationCausedByTurning = (turnSpeed * 0.01111f) // 0.01111f equal 1 / 90.0f
@@ -327,7 +343,7 @@ public class pdPlane : MonoBehaviour
             // 减速
             m_Velocity -= m_Transform.forward
                 * Mathf.Clamp(decelerationCausedByTurning, 0, m_TweakableProerties.MaxDecelerationCausedByTurning)
-                * delta;
+                * deltaTime;
         }
 
         // 阻力对速度的影响
@@ -358,7 +374,7 @@ public class pdPlane : MonoBehaviour
                 dragAcceleration_LocalSpace.y *= clampVerticalDragScale;
             }
 
-            velocityChangeCausedByDrag = dragAcceleration_LocalSpace * delta;
+            velocityChangeCausedByDrag = dragAcceleration_LocalSpace * deltaTime;
             // 阻力不能大于速率
             velocityChangeCausedByDrag.x = Mathf.Sign(velocityChangeCausedByDrag.x)
                 * Mathf.Min(Mathf.Abs(velocityChangeCausedByDrag.x), Mathf.Abs(velocity_LocalSpace.x));
@@ -409,7 +425,7 @@ public class pdPlane : MonoBehaviour
                 thrustPower *= hwmUtility.Evaluate(Mathf.Max(0, m_Transform.localPosition.y), keyframe3Cache);
             }
 
-            float thrustAcceleration = hwmUtility.PowerToAcceleration(thrustPower, m_PropulsiveSpeed, 1.0f, delta);
+            float thrustAcceleration = hwmUtility.PowerToAcceleration(thrustPower, m_PropulsiveSpeed, 1.0f, deltaTime);
             thrustAcceleration = Mathf.Min(thrustAcceleration, m_TweakableProerties.MaxThrustAcceleration);
 
             // 计算由重力产生的减速度、加速度
@@ -422,7 +438,7 @@ public class pdPlane : MonoBehaviour
             // 计算前向加速度
             float propulsiveAcceleration = thrustAcceleration + propulsiveGravityAcceleration;
 
-            float newPropulsiveSpeed = m_PropulsiveSpeed + propulsiveAcceleration * delta;
+            float newPropulsiveSpeed = m_PropulsiveSpeed + propulsiveAcceleration * deltaTime;
             newPropulsiveSpeed = Mathf.Min(newPropulsiveSpeed, m_TweakableProerties.MaxPropulsiveSpeed);
 
             float deltaSpeed = newPropulsiveSpeed - m_PropulsiveSpeed;
@@ -435,7 +451,7 @@ public class pdPlane : MonoBehaviour
             , m_PropulsiveSpeed < m_TweakableProerties.BeginStallSpeed
                 ? Mathf.Clamp01((m_PropulsiveSpeed - m_TweakableProerties.BeginStallSpeed) / (m_TweakableProerties.HeavyStallSpeed - m_TweakableProerties.BeginStallSpeed))
                 : 0
-            , delta);
+            , deltaTime);
 
         m_StallState = m_StallAmount > 0
             ? m_StallState = StallState.Stall
@@ -449,14 +465,14 @@ public class pdPlane : MonoBehaviour
         {
             // 升力不足所产生的下落加速度
             m_Velocity.y += Mathf.Min(0
-                , -30.0f * delta - velocityChangeCausedByDrag.y) // 这里需要抵消阻力
+                , -30.0f * deltaTime - velocityChangeCausedByDrag.y) // 这里需要抵消阻力
                     * m_StallAmount;
 
             // 压机头
             Vector3 targetHeadDirection = Vector3.Normalize(m_Velocity);
             Vector3 rotAxis = Vector3.Cross(m_Transform.forward, targetHeadDirection);
             float maxAngle = Vector3.Angle(m_Transform.forward, targetHeadDirection);
-            newRotation = Quaternion.AngleAxis(Mathf.Min(maxAngle, delta * m_StallAmount * 60), rotAxis)
+            newRotation = Quaternion.AngleAxis(Mathf.Min(maxAngle, deltaTime * m_StallAmount * 60), rotAxis)
                 * newRotation;
 
             // 失速导致高G转弯的CoolDown
@@ -464,16 +480,12 @@ public class pdPlane : MonoBehaviour
         }
         #endregion
 
-        #region 更新旋转
-        // 根据飞行姿态计算Roll
-        #endregion
-
         // 更新旋转
         m_Transform.localRotation = newRotation;
         m_PlaneRootTransform.localEulerAngles = newPlaneRootEulerAngles;
 
         // 更新位置
-        m_Transform.localPosition = m_Velocity * delta + m_Transform.localPosition;
+        m_Transform.localPosition = m_Velocity * deltaTime + m_Transform.localPosition;
     }
 
     /// <summary>
