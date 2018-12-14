@@ -3,14 +3,20 @@ using UnityEngine;
 
 public class pdBaseController : MonoBehaviour
 {
-    protected Vector2 m_Axis;
+    protected Vector2 m_MoveAxis;
+    protected Vector2 m_ViewAxis;
     protected float m_Roll = 0;
     protected pdPlane.ThrottleState m_Throttle = pdPlane.ThrottleState.Normal;
     protected pdPlane m_Plane;
 
-    public Vector2 GetAxis()
+    public Vector2 GetMoveAxis()
     {
-        return m_Axis;
+        return m_MoveAxis;
+    }
+
+    public Vector2 GetViewAxis()
+    {
+        return m_ViewAxis;
     }
 
     public pdPlane.ThrottleState GetThrottle()

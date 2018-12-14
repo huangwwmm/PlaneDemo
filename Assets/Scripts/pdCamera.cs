@@ -3,38 +3,10 @@
 public class pdCamera : MonoBehaviour
 {
     /// <summary>
-    /// 第三人称视角下，相机与飞机的极坐标半径
-    /// </summary>
-    public float TPSCameraPlaneDistance = 23.0f;
-    /// <summary>
-    /// 第三人称视角下，相机与飞机的极坐标角度
-    /// </summary>
-    public float TPSCameraToPlaneAngle = 13.79f;
-    /// <summary>
-    /// 相机的LookAt点位于Plane前方的距离
-    /// </summary>
-    public float TPSCameraLookAtToPlaneForwardDistance = 200;
-
-    /// <summary>
-    /// 加速度乘上这个值，所得为相机偏移(m)
-    /// 三个值分别对应飞机本地空间的三个方向：x左右，y垂直，z前后
-    /// 一版垂直要比左右低，因为:
-    ///     屏幕左右的空间比上下大。上下位移太大会导致飞机以到屏幕中间，遮挡准星
-    /// </summary>
-    public Vector3 TPSCameraOffsetMultiplyByGForce = new Vector3(6.0f / 67.4f, 2.0f / 67.4f, 0.1f);
-    /// <summary>
-    /// 加速度导致相机偏移的最大值
-    /// </summary>
-    public Vector3 TPSCameraOffsetMaxByGForce = new Vector3(6.0f, 2.0f, 2.0f);
-    /// <summary>
-    /// 相机偏移<see cref="m_TPSCameraOffset"/>的Lerp速度
-    /// </summary>
-    public float TPSCameraOffsetLerpSpeed = 2.0f;
-
-    /// <summary>
     /// 玩家的飞机
     /// </summary>
     private pdPlane m_MyPlane;
+    private pdBaseController m_MyController;
     /// <summary>
     /// 玩家飞机的Transform，Cache出来是为了性能
     /// </summary>
@@ -45,16 +17,30 @@ public class pdCamera : MonoBehaviour
     ///     加速度 
     /// </summary>
     private Vector3 m_TPSCameraOffset = Vector3.zero;
+    /// <summary>
+    /// 用户输入的杆量导致的相机旋转角度(欧拉角)
+    /// </summary>
+    private Vector2 m_TPSCameraAngularVelocityByViewAxis = Vector2.zero;
+    /// <summary>
+    /// 用户不输入ViewAxis的持续时间
+    /// </summary>
+    private float m_NoViewAxisInputDuration = 0;
 
     private Transform m_Transform;
     private Camera m_Camera;
+    /// <summary>
+    /// UNDONE Load when initialize
+    /// </summary>
+    public pdCameraProperties m_Properties;
 
-    public void SetMyPlane(pdPlane plane)
+    public void SetMyPlane(pdPlane plane, pdBaseController controller)
     {
         m_MyPlane = plane;
         m_MyPlaneTransform = m_MyPlane != null
             ? m_MyPlane.transform
             : null;
+
+        m_MyController = controller;
     }
 
     protected void Awake()
@@ -80,37 +66,77 @@ public class pdCamera : MonoBehaviour
             return;
         }
         // 相机延飞机前方向的偏移 UNDONE 值不会经常变动，Cache下来不要每帧算
-        float cameraToPlaneForwardOffset = TPSCameraPlaneDistance * Mathf.Cos(TPSCameraToPlaneAngle * Mathf.Deg2Rad);
+        float cameraToPlaneForwardOffset = m_Properties.TPSCameraPlaneDistance * Mathf.Cos(m_Properties.TPSCameraToPlaneAngle * Mathf.Deg2Rad);
         // 相机延飞机上方向的偏移 UNDONE 值不会经常变动，Cache下来不要每帧算
-        float cameraToPlaneUpOffset = TPSCameraPlaneDistance * Mathf.Sin(TPSCameraToPlaneAngle * Mathf.Deg2Rad);
+        float cameraToPlaneUpOffset = m_Properties.TPSCameraPlaneDistance * Mathf.Sin(m_Properties.TPSCameraToPlaneAngle * Mathf.Deg2Rad);
 
         #region TPS
         CameraProperties tpsCameraProperties_WorldSpace;
-        {
+        {    
+            // 用户主动控制视角
+            Quaternion rotationByInput;
+            { 
+                Vector2 viewAxis = m_MyController.GetViewAxis();
+                if (viewAxis.sqrMagnitude > 0)
+                {
+                    m_NoViewAxisInputDuration = 0;
+                    
+                    // 用户有输入
+                    Vector2 angularAcceleration = new Vector2(-viewAxis.y * m_Properties.TPSCameraAngularAccelerationByInput
+                        , viewAxis.x * m_Properties.TPSCameraAngularAccelerationByInput);
+                    m_TPSCameraAngularVelocityByViewAxis = m_TPSCameraAngularVelocityByViewAxis + angularAcceleration * deltaTime;
+                }
+                else
+                {
+                    m_NoViewAxisInputDuration += deltaTime;
+
+                    if (m_NoViewAxisInputDuration > m_Properties.TPSCameraAngularByInputToZeroWaitTime)
+                    {
+                        // 用户无输入
+                        m_TPSCameraAngularVelocityByViewAxis = Vector2.MoveTowards(m_TPSCameraAngularVelocityByViewAxis
+                            , Vector2.zero, m_Properties.TPSCameraAngularByInputToZeroAcceleration * deltaTime);
+                    }
+                }
+
+                m_TPSCameraAngularVelocityByViewAxis.y = m_TPSCameraAngularVelocityByViewAxis.y > 180.0f
+                    ? m_TPSCameraAngularVelocityByViewAxis.y - 360.0f
+                    : m_TPSCameraAngularVelocityByViewAxis.y < -180.0f
+                        ? m_TPSCameraAngularVelocityByViewAxis.y + 360.0f
+                        : m_TPSCameraAngularVelocityByViewAxis.y;
+
+                // UNDONE 防止pitch越位
+
+                rotationByInput = Quaternion.Euler(m_TPSCameraAngularVelocityByViewAxis);
+            }
+
             // 注视点
-            tpsCameraProperties_WorldSpace.LookAt = m_MyPlaneTransform.position + m_MyPlaneTransform.forward * TPSCameraLookAtToPlaneForwardDistance;
+            tpsCameraProperties_WorldSpace.LookAt = m_MyPlaneTransform.position + rotationByInput * m_MyPlaneTransform.forward * m_Properties.TPSCameraLookAtToPlaneForwardDistance;
+
             // 根据注视点推算出的相机坐标
             tpsCameraProperties_WorldSpace.Position = tpsCameraProperties_WorldSpace.LookAt
-                    + m_MyPlaneTransform.TransformDirection(new Vector3(0
-                , cameraToPlaneUpOffset
-                , -cameraToPlaneForwardOffset - TPSCameraLookAtToPlaneForwardDistance));
+                + rotationByInput * m_MyPlaneTransform.TransformDirection(new Vector3(0
+                    , cameraToPlaneUpOffset
+                    , -cameraToPlaneForwardOffset - m_Properties.TPSCameraLookAtToPlaneForwardDistance));
             tpsCameraProperties_WorldSpace.UpDirection = Vector3.up;
 
             // 根据飞机的G力偏移相机, 给玩家传达飞行员承受的加速度
             Vector3 planeAcceleration_LocalSpace = m_MyPlane.GetAcceleration_LocalSpace();
 
-            Vector3 offsetByGForce = m_MyPlaneTransform.TransformDirection(new Vector3(hwmUtility.ClampAbs(planeAcceleration_LocalSpace.x * TPSCameraOffsetMultiplyByGForce.x, TPSCameraOffsetMaxByGForce.x)
-                , hwmUtility.ClampAbs(planeAcceleration_LocalSpace.y * TPSCameraOffsetMultiplyByGForce.y, TPSCameraOffsetMaxByGForce.y)
-                , hwmUtility.ClampAbs(-planeAcceleration_LocalSpace.z * TPSCameraOffsetMultiplyByGForce.z, TPSCameraOffsetMaxByGForce.z)));
+            Vector3 offsetByGForce = m_MyPlaneTransform.TransformDirection(new Vector3(hwmUtility.ClampAbs(planeAcceleration_LocalSpace.x * m_Properties.TPSCameraOffsetMultiplyByGForce.x, m_Properties.TPSCameraOffsetMaxByGForce.x)
+                , hwmUtility.ClampAbs(planeAcceleration_LocalSpace.y * m_Properties.TPSCameraOffsetMultiplyByGForce.y, m_Properties.TPSCameraOffsetMaxByGForce.y)
+                , hwmUtility.ClampAbs(-planeAcceleration_LocalSpace.z * m_Properties.TPSCameraOffsetMultiplyByGForce.z, m_Properties.TPSCameraOffsetMaxByGForce.z)));
 
             // TODO 根据负载程度抖动相机? 电影和动画中经常这么做
 
             // 计算Offset
-            m_TPSCameraOffset = Vector3.Lerp(m_TPSCameraOffset, offsetByGForce, Mathf.Min(deltaTime * TPSCameraOffsetLerpSpeed, 1.0f));
+            m_TPSCameraOffset = Vector3.Lerp(m_TPSCameraOffset
+                , offsetByGForce
+                , Mathf.Min(deltaTime * m_Properties.TPSCameraOffsetLerpSpeed, 1.0f));
             tpsCameraProperties_WorldSpace.Position += m_TPSCameraOffset;
         }
         #endregion
 
+        // UNDONE lerp to CameraProperties
         m_Transform.localPosition = tpsCameraProperties_WorldSpace.Position;
         m_Transform.localRotation = Quaternion.LookRotation(tpsCameraProperties_WorldSpace.LookAt - tpsCameraProperties_WorldSpace.Position
             , tpsCameraProperties_WorldSpace.UpDirection);
@@ -139,5 +165,10 @@ public class pdCamera : MonoBehaviour
             cameraProperties.UpDirection = transform.InverseTransformDirection(UpDirection);
             return cameraProperties;
         }
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Box(m_TPSCameraAngularVelocityByViewAxis.ToString());
     }
 }

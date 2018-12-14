@@ -91,7 +91,7 @@ public class pdPlane : MonoBehaviour
     /// 从Controller获取到的输入，向量的模小于1
     /// +X => yaw ; +Y => pitch
     /// </summary>
-    private Vector2 m_Axis;
+    private Vector2 m_MoveAxis;
 
     /// <summary>
     /// pdPlane节点
@@ -209,12 +209,12 @@ public class pdPlane : MonoBehaviour
         #endregion
 
         #region 获取杆量输入
-        m_Axis = m_Controller.GetAxis();
-        m_Axis.y = -m_Axis.y;
-        float axisLength = m_Axis.magnitude;
-        m_Axis = axisLength > 1.0f
-            ? m_Axis / axisLength
-            : m_Axis;
+        m_MoveAxis = m_Controller.GetMoveAxis();
+        m_MoveAxis.y = -m_MoveAxis.y; // y轴反转
+        float axisLength = m_MoveAxis.magnitude;
+        m_MoveAxis = axisLength > 1.0f
+            ? m_MoveAxis / axisLength
+            : m_MoveAxis;
 
         // 左右翼受伤时，对杆量进行偏移 UNDONE 还没做机翼
         #endregion
@@ -255,7 +255,7 @@ public class pdPlane : MonoBehaviour
                 // 确保飞机在高速中做不出高G转弯(例如俯冲)
                 && m_PropulsiveSpeed < (m_TweakableProerties.HightSpeed + m_TweakableProerties.NormalSpeed) * 0.5f
                 && m_HighGTurnCD < 0
-                && CanHighGTrunForAxis(m_Axis);
+                && CanHighGTrunForAxis(m_MoveAxis);
 
             if (m_IsHighGTurn)
             {
@@ -275,7 +275,7 @@ public class pdPlane : MonoBehaviour
         }
 
         // Yaw轴和Pitch轴
-        Vector2 angularVelocity = AxisToAngularVelocity(m_Axis);
+        Vector2 angularVelocity = AxisToAngularVelocity(m_MoveAxis);
         m_AngularVelocity = Vector2.MoveTowards(m_AngularVelocity, angularVelocity, deltaTime * m_MaxAngularAcceleration);
         // 角度变化
         Quaternion deltaYawPitchRotation = Quaternion.Euler(m_AngularVelocity * deltaTime);
@@ -289,7 +289,7 @@ public class pdPlane : MonoBehaviour
             float currentRoll = Mathf.DeltaAngle(0, currentRollEulerAngles.z);
             float rollAxis = -m_Controller.GetRoll();
             float targetRoll = Mathf.Abs(rollAxis) < Mathf.Epsilon
-                ? Mathf.Clamp(Mathf.Asin(-m_Axis.x) * Mathf.Rad2Deg, -90, 90)
+                ? Mathf.Clamp(Mathf.Asin(-m_MoveAxis.x) * Mathf.Rad2Deg, -90, 90)
                 : currentRoll + rollAxis * m_MaxRollAcceleration;
 
             // 和fTargetRollAngle距离小于45度时开始减速，越接近目标速度越小，这里的魔法数字是试出来的

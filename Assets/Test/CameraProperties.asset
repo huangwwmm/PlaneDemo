@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82720ec6c6c5f364e8656d6c01f50120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TPSCameraPlaneDistance: 23
+  TPSCameraToPlaneAngle: 13.79
+  TPSCameraLookAtToPlaneForwardDistance: 200
+  TPSCameraOffsetMultiplyByGForce: {x: 0.08902077, y: 0.02967359, z: 0.1}
+  TPSCameraOffsetMaxByGForce: {x: 6, y: 2, z: 2}
+  TPSCameraOffsetLerpSpeed: 2
+  TPSCameraAngularAccelerationByInput: 45
+  TPSCameraAngularByInputToZeroAcceleration: 60
+  TPSCameraAngularByInputToZeroWaitTime: 0.6

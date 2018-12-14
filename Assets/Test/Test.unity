@@ -235,8 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420744fde7efc5045b587b5a77d3e760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDistanceToPlane: 23
-  CameraAngle: 13.79
+  m_Properties: {fileID: 11400000, guid: 5e6e45c0fee86544399cf2509247daf8, type: 2}
 --- !u!1 &819594913
 GameObject:
   m_ObjectHideFlags: 0
