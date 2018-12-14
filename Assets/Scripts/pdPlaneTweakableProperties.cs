@@ -21,7 +21,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 低速时对转向能力的影响
     /// </summary>
-    public float TurnAngularSpeedFactor_LowSpeed = 0.8f;
+    public float TurnAngularSpeedFactor_LowSpeed = 0.9f;
     /// <summary>
     /// 巡航速度
     /// </summary>
@@ -33,7 +33,7 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// <summary>
     /// 高速时对转向能力的影响
     /// </summary>
-    public float TurnAngularSpeedFactor_HightSpeed = 0.8f;
+    public float TurnAngularSpeedFactor_HightSpeed = 0.9f;
     /// <summary>
     /// 低空飞行高度
     /// </summary>
@@ -55,9 +55,9 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// </summary>
     public float TurnAngularSpeedFactor_HightHeight = 0.8f;
     /// <summary>
-    /// 飞机水平最大转向角速度
+    /// 飞机水平最大转向角加速度
     /// </summary>
-    public float MaxAngularVelocity = 45.0f;
+    public float MaxAngularAcceleration = 45.0f;
     /// <summary>
 	/// 受损状态下的转向角速度缩放
 	/// </summary>
@@ -159,4 +159,12 @@ public class pdPlaneTweakableProperties : ScriptableObject
     /// 飞机垂直爬升时获得的额外减速度
     /// </summary>
     public float GravityDeceleration = 0;
+    /// <summary>
+    /// 用于计算失速程度，速度(<see cref="pdPlane.m_PropulsiveSpeed"/>)到达这个值时, <see cref="pdPlane.m_StallAmount"/>为0
+    /// </summary>
+    public float BeginStallSpeed = 30.0f;
+    /// <summary>
+    /// 用于计算失速程度，速度(<see cref="pdPlane.m_PropulsiveSpeed"/>)到达这个值时, <see cref="pdPlane.m_StallAmount"/>为1
+    /// </summary>
+    public float HeavyStallSpeed = 10.0f;
 }

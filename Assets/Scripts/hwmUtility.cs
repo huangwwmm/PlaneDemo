@@ -229,5 +229,27 @@ public static class hwmUtility
         // 0.5 * (-v * |v|) * C_D
         return dragForce * 0.5f;
     }
+
+    public static float MoveTowards(float current, float target, ref float velocity, float maxVelocity, float maxAcceleration, float deltaTime)
+    {
+        float vCurrentToTarget = target - current;
+        float dirCurrentToTarget = Mathf.Sign(vCurrentToTarget);
+        float fCurrentToTarget = vCurrentToTarget * dirCurrentToTarget;
+
+		// Vt^2 - V0^2 = 2*a*s
+        float fCurrentIdealSpeed = Mathf.Sqrt(2.0f * maxAcceleration * fCurrentToTarget);
+        float fNewIdealSpeed = Mathf.Max(0, fCurrentIdealSpeed - maxAcceleration * deltaTime);
+
+
+        float vNewVelocity = Mathf.MoveTowards(velocity, dirCurrentToTarget * fNewIdealSpeed, maxAcceleration * deltaTime);
+        vNewVelocity = ClampAbs(vNewVelocity, maxVelocity);
+
+        float a = (vNewVelocity - velocity) / deltaTime;
+        float vDelta = velocity * deltaTime + 0.5f * a * deltaTime * deltaTime;
+        current += vDelta;
+        velocity = vNewVelocity;
+
+        return current;
+    }
     #endregion
 }
