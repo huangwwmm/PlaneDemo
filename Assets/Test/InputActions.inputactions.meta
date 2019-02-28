@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 23c1dbf74b4c5a44dbc78fafcc88697b
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: <root>
+    11400004: Plane/ThrottleAxis
+    11400006: Plane/MoveVector2
+    11400008: Plane/ViewVector2
+    11400010: Plane/RollAxis
+    11400012: Plane/OpenPausePanel
+    11400014: UIPanelGeneral/Back
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  generateWrapperCode: 1
+  wrapperCodePath: Assets/Test/pdInputActions.cs
+  wrapperClassName: pdInputActions
+  wrapperCodeNamespace: 
+  generateActionEvents: 0
+  generateInterfaces: 0
+  actionGuids: []
+  actionMapGuids: []

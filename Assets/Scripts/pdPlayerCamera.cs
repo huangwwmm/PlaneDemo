@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class pdCamera : MonoBehaviour
+public class pdPlayerCamera : MonoBehaviour
 {
     /// <summary>
     /// 玩家的飞机
@@ -76,14 +76,14 @@ public class pdCamera : MonoBehaviour
             // 用户主动控制视角
             Quaternion rotationByInput;
             { 
-                Vector2 viewAxis = m_MyController.GetViewAxis();
-                if (viewAxis.sqrMagnitude > 0)
+                Vector2 viewVector2 = m_MyController.GetViewVector2();
+                if (viewVector2.sqrMagnitude > 0)
                 {
                     m_NoViewAxisInputDuration = 0;
                     
                     // 用户有输入
-                    Vector2 angularAcceleration = new Vector2(-viewAxis.y * m_Properties.TPSCameraAngularAccelerationByInput
-                        , viewAxis.x * m_Properties.TPSCameraAngularAccelerationByInput);
+                    Vector2 angularAcceleration = new Vector2(-viewVector2.y * m_Properties.TPSCameraAngularAccelerationByInput
+                        , viewVector2.x * m_Properties.TPSCameraAngularAccelerationByInput);
                     m_TPSCameraAngularVelocityByViewAxis = m_TPSCameraAngularVelocityByViewAxis + angularAcceleration * deltaTime;
                 }
                 else

@@ -3,30 +3,30 @@ using UnityEngine;
 
 public class pdBaseController : MonoBehaviour
 {
-    protected Vector2 m_MoveAxis;
-    protected Vector2 m_ViewAxis;
-    protected float m_Roll = 0;
-    protected pdPlane.ThrottleState m_Throttle = pdPlane.ThrottleState.Normal;
+    protected Vector2 m_MoveVector2;
+    protected Vector2 m_ViewVector2;
+    protected float m_RollAxis = 0;
+    protected pdPlane.ThrottleState m_ThrottleState = pdPlane.ThrottleState.Normal;
     protected pdPlane m_Plane;
 
-    public Vector2 GetMoveAxis()
+    public Vector2 GetMoveVector2()
     {
-        return m_MoveAxis;
+        return m_MoveVector2;
     }
 
-    public Vector2 GetViewAxis()
+    public Vector2 GetViewVector2()
     {
-        return m_ViewAxis;
+        return m_ViewVector2;
     }
 
-    public pdPlane.ThrottleState GetThrottle()
+    public pdPlane.ThrottleState GetThrottleState()
     {
-        return m_Throttle;
+        return m_ThrottleState;
     }
 
-    public float GetRoll()
+    public float GetRollAxis()
     {
-        return m_Roll;
+        return m_RollAxis;
     }
 
     public void SetControllerPlane(pdPlane snake)

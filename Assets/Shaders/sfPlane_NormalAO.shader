@@ -17,30 +17,30 @@ Shader "Super Fairy/Plane_NormalAO"
 		_BumpScale("Scale", Float) = 1.0
 		_BumpMap("Normal AO Map", 2D) = "bump" {}
 
-		////UNDONE:ÔÝÊ±²»ÐèÒªParallaxMap
+		////UNDONE:ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ÒªParallaxMap
 		//_Parallax ("Height Scale", Range (0.005, 0.08)) = 0.02
 		//_ParallaxMap ("Height Map", 2D) = "black" {}
 		//
-		////UNDONE:ÒÑ¾­²»Æð×÷ÓÃ£¬AOÒÑ¾­´æÔÚNormalMapÖÐ
+		////UNDONE:ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½AOï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½NormalMapï¿½ï¿½
 		//_OcclusionStrength("Strength", Range(0.0, 1.0)) = 1.0
 		//_OcclusionMap("Occlusion", 2D) = "white" {}
 
-		//ÔÝÊ±±£Áô£¬ÏÄ´º¹âÒªÓÃ
+		//ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½Òªï¿½ï¿½
 		_EmissionColor("Color", Color) = (0,0,0)
 		_EmissionMap("Emission", 2D) = "white" {}
 		
-		////UNDONE:ÔÝÊ±²»ÐèÒª
+		////UNDONE:ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Òª
 		//_DetailMask("Detail Mask", 2D) = "white" {}
 		//
-		////UNDONE:ÔÝÊ±²»ÐèÒª
+		////UNDONE:ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Òª
 		//_DetailAlbedoMap("Detail Albedo x2", 2D) = "grey" {}
 		//_DetailNormalMapScale("Scale", Float) = 1.0
 		//_DetailNormalMap("Normal Map", 2D) = "bump" {}
 		//
-		////UNDONE:ÔÝÊ±²»ÐèÒª
+		////UNDONE:ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Òª
 		//[Enum(UV0,0,UV1,1)] _UVSec ("UV Set for secondary textures", Float) = 0
 		//
-		////UNDONE:¼Æ»®È¥µô
+		////UNDONE:ï¿½Æ»ï¿½È¥ï¿½ï¿½
 		//_PointLightIntensity("PointLightIntensity", Float) = 1.0
 
 
@@ -175,7 +175,7 @@ Shader "Super Fairy/Plane_NormalAO"
 													#endif
 														half3 i_posWorld)
 			{
-				//// UNDONE: ÉêÔ¶£º×îÖÕÊÖ»ú°æ±¾²»ÒªÖ§³ÖParallax Map£¬Õâ¸öÌ«ÏûºÄÐÔÄÜÁË¡£¡£¡£±ðÍüÁËÈ¥µô
+				//// UNDONE: ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½æ±¾ï¿½ï¿½ÒªÖ§ï¿½ï¿½Parallax Mapï¿½ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½
 				//#if defined(_PARALLAXMAP)
 				//	i_tex = Parallax(i_tex, i_viewDirForParallax);
 				//#endif
@@ -201,13 +201,13 @@ Shader "Super Fairy/Plane_NormalAO"
 				UNITY_INITIALIZE_OUTPUT(VertexOutputForwardBase, o);
 			
 				float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
-				#if UNITY_SPECCUBE_BOX_PROJECTION
-					o.posWorld = posWorld.xyz;
-				#endif
+				// #if UNITY_SPECCUBE_BOX_PROJECTION
+				// 	o.posWorld = posWorld.xyz;
+				// #endif
 
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.tex = TexCoords(v);
-				o.eyeVec = NormalizePerVertexNormal(posWorld.xyz - _WorldSpaceCameraPos);
+				o.eyeVec = float4(NormalizePerVertexNormal(posWorld.xyz - _WorldSpaceCameraPos),1);
 				float3 normalWorld = UnityObjectToWorldNormal(v.normal);
 
 				#ifdef _TANGENT_TO_WORLD
@@ -226,12 +226,12 @@ Shader "Super Fairy/Plane_NormalAO"
 				//We need this for shadow receving
 				TRANSFER_SHADOW(o);
 			
-				//PointLightingÔÝ²»¿¼ÂÇ·¨Ïß
+				//PointLightingï¿½Ý²ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½
 				float3 toPointLight = float3(unity_4LightPosX0.x - posWorld.x, unity_4LightPosY0.x - posWorld.y, unity_4LightPosZ0.x - posWorld.z);
 				o.ambientOrLightmapUV = half4(saturate(1 / (unity_4LightAtten0.x * dot(toPointLight, toPointLight))) * unity_LightColor[0].rgb, 1);
 				//o.ambientOrLightmapUV = VertexGIForward(v, posWorld, normalWorld);
 				
-				//UNDONE:ÔÝÊ±²»ÐèÒªParallaxMap
+				//UNDONE:ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ÒªParallaxMap
 				//#ifdef _PARALLAXMAP
 				//	TANGENT_SPACE_ROTATION;
 				//	half3 viewDirForParallax = mul (rotation, ObjSpaceViewDir(v.vertex));
@@ -459,7 +459,7 @@ Shader "Super Fairy/Plane_NormalAO"
 				// TEST
 				// return c;
 
-				//// UNDONE: ÉêÔ¶£ºÊÇ·ñÓÐ±ØÒª£¿ÎÒ¿´Êä³öµÄÑÕÉ«Ö»ÓÐºÚÉ«£¬Ó¦¸ÃÊÇÐèÒªLight Probe²ÅÄÜÆðÐ§£¿
+				//// UNDONE: ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð±ï¿½Òªï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«Ö»ï¿½Ðºï¿½É«ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªLight Probeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
 				//#if UNITY_VERSION >= 566
 				//c.rgb += UNITY_BRDF_GI (s.diffColor, s.specColor, s.oneMinusReflectivity, s.smoothness, s.normalWorld, -s.eyeVec, occlusion, gi);
 				//#else

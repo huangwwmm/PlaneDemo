@@ -85,13 +85,13 @@ public class pdPlane : MonoBehaviour
     /// <summary>
     /// 节流阀状态
     /// </summary>
-    private ThrottleState m_Throttle;
+    private ThrottleState m_ThrottleState;
 
     /// <summary>
     /// 从Controller获取到的输入，向量的模小于1
     /// +X => yaw ; +Y => pitch
     /// </summary>
-    private Vector2 m_MoveAxis;
+    private Vector2 m_MoveVector2;
 
     /// <summary>
     /// pdPlane节点
@@ -209,25 +209,25 @@ public class pdPlane : MonoBehaviour
         #endregion
 
         #region 获取杆量输入
-        m_MoveAxis = m_Controller.GetMoveAxis();
-        m_MoveAxis.y = -m_MoveAxis.y; // y轴反转
-        float axisLength = m_MoveAxis.magnitude;
-        m_MoveAxis = axisLength > 1.0f
-            ? m_MoveAxis / axisLength
-            : m_MoveAxis;
+        m_MoveVector2 = m_Controller.GetMoveVector2();
+        m_MoveVector2.y = -m_MoveVector2.y; // y轴反转
+        float axisLength = m_MoveVector2.magnitude;
+        m_MoveVector2 = axisLength > 1.0f
+            ? m_MoveVector2 / axisLength
+            : m_MoveVector2;
 
         // 左右翼受伤时，对杆量进行偏移 UNDONE 还没做机翼
         #endregion
 
         #region 更新节流阀状态
-        ThrottleState inputThrottle = m_Controller.GetThrottle();
-        switch (inputThrottle)
+        ThrottleState inputThrottleState = m_Controller.GetThrottleState();
+        switch (inputThrottleState)
         {
             case ThrottleState.Normal:
             // 减速没有限制
             case ThrottleState.Brake:
             case ThrottleState.BrakeII:
-                m_Throttle = inputThrottle;
+                m_ThrottleState = inputThrottleState;
                 break;
             // 加速
             case ThrottleState.BoostII:
@@ -235,11 +235,11 @@ public class pdPlane : MonoBehaviour
                 // 发动机受损时，不能加速
                 if (AnyEngineDamaged())
                 {
-                    m_Throttle = ThrottleState.Normal;
+                    m_ThrottleState = ThrottleState.Normal;
                 }
                 else
                 {
-                    m_Throttle = inputThrottle;
+                    m_ThrottleState = inputThrottleState;
                 }
                 break;
         }
@@ -251,11 +251,11 @@ public class pdPlane : MonoBehaviour
         // 高G转弯
         {
             // 判断高G转弯
-            m_IsHighGTurn = (m_Throttle == ThrottleState.Brake || m_Throttle == ThrottleState.BrakeII)
+            m_IsHighGTurn = (m_ThrottleState == ThrottleState.Brake || m_ThrottleState == ThrottleState.BrakeII)
                 // 确保飞机在高速中做不出高G转弯(例如俯冲)
                 && m_PropulsiveSpeed < (m_TweakableProerties.HightSpeed + m_TweakableProerties.NormalSpeed) * 0.5f
                 && m_HighGTurnCD < 0
-                && CanHighGTrunForAxis(m_MoveAxis);
+                && CanHighGTrunForAxis(m_MoveVector2);
 
             if (m_IsHighGTurn)
             {
@@ -275,7 +275,7 @@ public class pdPlane : MonoBehaviour
         }
 
         // Yaw轴和Pitch轴
-        Vector2 angularVelocity = AxisToAngularVelocity(m_MoveAxis);
+        Vector2 angularVelocity = AxisToAngularVelocity(m_MoveVector2);
         m_AngularVelocity = Vector2.MoveTowards(m_AngularVelocity, angularVelocity, deltaTime * m_MaxAngularAcceleration);
         // 角度变化
         Quaternion deltaYawPitchRotation = Quaternion.Euler(m_AngularVelocity * deltaTime);
@@ -287,9 +287,9 @@ public class pdPlane : MonoBehaviour
         {
             Vector3 currentRollEulerAngles = m_PlaneRootTransform.localEulerAngles;
             float currentRoll = Mathf.DeltaAngle(0, currentRollEulerAngles.z);
-            float rollAxis = -m_Controller.GetRoll();
+            float rollAxis = -m_Controller.GetRollAxis();
             float targetRoll = Mathf.Abs(rollAxis) < Mathf.Epsilon
-                ? Mathf.Clamp(Mathf.Asin(-m_MoveAxis.x) * Mathf.Rad2Deg, -90, 90)
+                ? Mathf.Clamp(Mathf.Asin(-m_MoveVector2.x) * Mathf.Rad2Deg, -45, 45)
                 : currentRoll + rollAxis * m_MaxRollAcceleration;
 
             // 和fTargetRollAngle距离小于45度时开始减速，越接近目标速度越小，这里的魔法数字是试出来的
@@ -355,9 +355,9 @@ public class pdPlane : MonoBehaviour
             Vector3 dragForce_LocalSpace = hwmMath.CalculateDrag(velocity_LocalSpace
                 , new Vector3(m_TweakableProerties.VerticalDragCoefficient
                     , m_TweakableProerties.VerticalDragCoefficient
-                    , m_Throttle == ThrottleState.Brake
+                    , m_ThrottleState == ThrottleState.Brake
                         ? m_TweakableProerties.PropulsiveDragCoefficient_Brake
-                        : m_Throttle == ThrottleState.BrakeII
+                        : m_ThrottleState == ThrottleState.BrakeII
                             ? m_TweakableProerties.PropulsiveDragCoefficient_BrakeII
                             : m_TweakableProerties.PropulsiveDragCoefficient));
             // a = F / m (加速度 = 阻力 / 自身质量), 为简化计算, 这里假设自身质量为1
@@ -390,7 +390,7 @@ public class pdPlane : MonoBehaviour
         // 引擎推力
         {
             float thrustPower;
-            switch (m_Throttle)
+            switch (m_ThrottleState)
             {
                 case ThrottleState.BoostII:
                     thrustPower = m_TweakableProerties.ThrustPower_BoostII;
@@ -409,7 +409,7 @@ public class pdPlane : MonoBehaviour
                     break;
                 default:
                     thrustPower = 0;
-                    hwmDebug.Assert(false, "Invalid Throttle: " + m_Throttle);
+                    hwmDebug.Assert(false, "Invalid Throttle: " + m_ThrottleState);
                     break;
             }
 
@@ -470,11 +470,13 @@ public class pdPlane : MonoBehaviour
 
             // 压机头
             Vector3 targetHeadDirection = Vector3.Normalize(m_Velocity);
-            Vector3 rotAxis = Vector3.Cross(m_Transform.forward, targetHeadDirection);
             float maxAngle = Vector3.Angle(m_Transform.forward, targetHeadDirection);
-            newRotation = Quaternion.AngleAxis(Mathf.Min(maxAngle, deltaTime * m_StallAmount * 60), rotAxis)
-                * newRotation;
-
+            if (maxAngle > Mathf.Epsilon)
+            {
+                Vector3 rotAxis = Vector3.Cross(m_Transform.forward, targetHeadDirection);
+                newRotation = Quaternion.AngleAxis(Mathf.Min(maxAngle, deltaTime * m_StallAmount * 60), rotAxis)
+                    * newRotation;
+            }
             // 失速导致高G转弯的CoolDown
             m_HighGTurnCD = m_TweakableProerties.HighGTurnCD;
         }
